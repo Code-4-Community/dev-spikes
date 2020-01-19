@@ -26,6 +26,7 @@ Access Token Composition:
     - 1: Account confirmed.
     - 2: Account awaiting admin confirmation.
 
+**All routes are prepended with `api/v1/` unless otherwise noted!!**
 
 ## `POST user/login`
 
