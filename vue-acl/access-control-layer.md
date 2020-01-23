@@ -44,7 +44,7 @@ function canDelete(current_user, event_user_id) {
 
 Use a wrapper component that renders interior content only if a given user's role is included in a pre-determined list of acceptable roles. Full credit goes to the author of [this article](https://dev.to/umarov/easy-access-control-in-your-vue-apps-hhp).
 
-**AccessControl.vue**. [More information about <slot />](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)
+**AccessControl.vue**. [More information about the 'slot' tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)
 ```html
 <template>
   <div v-if="hasRole">
