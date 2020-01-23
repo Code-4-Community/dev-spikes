@@ -16,10 +16,10 @@ function canDelete(current_user, event_user_id) {
 }
 ```
 
-##### Pros
+#### Pros
   - No external library to learn and keep track of
 
-##### Cons
+#### Cons
   - Scales... acceptably? Not terribly, despite initial impressions. Some circumstances:
     -  Want to change what information is needed from the user to pass the predicate
     -- That logic will be in one place anyway, where the predicate is implemented. Will only have to be changed there
@@ -80,10 +80,10 @@ Button would not be rendered
 </access-control>
 ```
 
-##### Pros
+#### Pros
   - Readability. Extremely easy to see what elements of a component or what components on a page are concerned with roles. A *v-if* could be anything, until you do a double take to find out. It's easier to see what's wrapped in AccessControl and then check for what roles it accepts on-the-fly.
 
-##### Cons (or just a neutral?)
+#### Cons (or just a neutral?)
   - As far as I can tell, almost exact same scalability as just a plain v-if. So with the same scalability but better readability I would pick this method.
 
 ### Method 3: CASL
