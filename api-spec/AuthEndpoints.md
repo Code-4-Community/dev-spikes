@@ -6,7 +6,6 @@ Common Headers:
 ```
 
 Access Token Composition:
-
 ``` json
 {
     "userId": UUID,
@@ -73,7 +72,10 @@ Body:
 ### __Request__
 
 Headers:
-- ***refreshToken : JWT***
+
+```json
+  X-Refresh-Token : JWT
+```
 
 ### __Responses__ 
 
@@ -98,7 +100,11 @@ Body:
 ### __Request__
 
 Headers:
-- ***refreshToken : JWT***
+
+```json
+  X-Access-Token : JWT
+  X-Refresh-Token : JWT
+```
 
 ### __Responses__ 
 
