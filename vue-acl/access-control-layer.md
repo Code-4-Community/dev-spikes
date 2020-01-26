@@ -10,8 +10,12 @@ Use v-if in a Component tag to render if and only if the user's current rank (in
 ```
 
 ```javascript
-function canDelete(current_user, event_user_id) {
-  return current_user.id === event_user_id
+/* component_user_id is the property of any component created by or associated with a user.
+*  For example, a User may have created an event. That User's id will be associated with
+*  that event as the component_user_id field
+*/
+function canDelete(current_user, component_user_id) {
+  return current_user.id === component_user_id)
       || isAdmin(current_user)
 }
 ```
@@ -56,11 +60,14 @@ Use a wrapper component that renders interior content only if a given user's rol
 export default {
   props: {
     roles: { type: Array, default: () => [] },
-    role: { type: String, default: '' }
+    role: { type: String, default: '' },
+    component_user_id: { type: Number,  default: -2 },
+    user_id: { type: String, default: -1 }
   },
   computed: {
     hasRole () {
-      return this.roles.length === 0 || this.roles.includes(this.role)
+      return (this.roles.length === 0 || this.roles.includes(this.role))
+          || (this.component_user_id === this.user_id)
     }
   }
 }
