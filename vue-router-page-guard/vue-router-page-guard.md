@@ -20,7 +20,7 @@ const router = new VueRouter({
 })
 ```
 
-Where **to** is a Route to be routed to, **from** is the Route being navigated away from, and **next** is a function that reesolves the hook depending on what arguments it is given.
+Where **to** is a Route to be routed to, **from** is the Route being navigated away from, and **next** is a function that resolves the hook depending on what arguments it is given.
 
 No arguments in **next**, simply **next()**, resolves the hook and allows the navigation to happen.
 
