@@ -27,3 +27,8 @@ No arguments in **next**, simply **next()**, resolves the hook and allows the na
 **next(false)** will block the route and re-route back to the **from** route.
 
 **next('/') or next({ path: '/' })** will redirect to a different location than the **to** location.
+
+### Working in Tandem with dynamically shown components
+
+This functionality will supplement the ability to dynamically render individual components. If an entire page is only relevant to administrative users, it makes more sense to restrict that page using this method than to allow users to route to the page and see no content or a simple message.
+
