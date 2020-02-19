@@ -6,7 +6,6 @@ Common Headers:
 ```
 
 Access Token Composition:
-
 ``` json
 {
     "userId": UUID,
@@ -73,7 +72,10 @@ Body:
 ### __Request__
 
 Headers:
-- ***refreshToken : JWT***
+
+```json
+  X-Refresh-Token : JWT
+```
 
 ### __Responses__ 
 
@@ -98,7 +100,11 @@ Body:
 ### __Request__
 
 Headers:
-- ***refreshToken : JWT***
+
+```json
+  X-Access-Token : JWT
+  X-Refresh-Token : JWT
+```
 
 ### __Responses__ 
 
@@ -167,3 +173,18 @@ PATH: `GET user/verify/:secret_key`
 
 #### `401 Unauthorized`
 > The secret key is invalid or expired.
+
+## `GET user/create_secret/:user_id`
+
+> Used for creating secret keys for users.
+
+### __Request__
+PATH: `GET user/create_secret/:user_id`
+
+### __Responses__
+
+#### `200 OK`
+> The a secret key was created and stored for the given user.
+
+#### `401 Unauthorized`
+> The given user id could not be found.
