@@ -5,9 +5,9 @@ Any routes with the `authorized` path are authorized routes and require a valid 
 Any response of `401 UNAUTHORIZED` indicates that a user does not have a valid access token JWT header.
 
 ## `GET api/v1/events`
-### `GET api/v1/authorized/users/:user_id/events/signed_up`
-### `GET api/v1/authorized/users/:user_id/events/qualified`
-### `GET api/v1/authorized/users/:user_id/starred`
+### `GET api/v1/protected/users/:user_id/events/signed_up`
+### `GET api/v1/protected/users/:user_id/events/qualified`
+### `GET api/v1/protected/users/:user_id/starred`
 
 Getting a list of events. Either all events, all events a user is signed up for, all events
 a user is qualified for, or all events a user has stared as wanting to attend.
@@ -89,12 +89,75 @@ The event was retrieved successfully.
 ```
 
 
+# Account Creation Flow
+
+## `POST api/v1/protected/requests`
+
+Making a request to be upgraded from GP to PF.
+Must be made by a GP user.
+Potentially adding bottle nose to prevent multiple denied requests.
+Allow multiple outstanding requests?
+
+Request
+```json
+{
+  "description": "STRING"
+}
+```
+
+Response
+`200 OK`
+`429 TOO MANY REQUESTS`
+
+## `GET api/v1/protected/requests`
+
+Getting all active requests.
+Must be called by an admin.
+
+Response
+```json
+{
+  "requests": [
+    {
+      "id": "request_id STRING",
+      "description": "STRING",
+      "user": "user's name STRING"
+    },
+    ...
+  ]
+}
+```
+
+## `POST api/v1/protected/requests/:request_id/approve`
+## `POST api/v1/protected/requests/:request_id/reject`
+
+Approving or rejecting a request by a user to become a PF.
+Must be called by an admin.
+Always `200 OK`.
+
+
+## `GET api/v1/protected/requests/:request_id`
+
+Getting the status of a particular request, tbd, approved, or rejected
+
+Response
+```json
+{
+  "status": "APPROVED" | "REJECTED" | "PENDING"
+}
+```
+
+
+
+
+
+
 
 # Cart Stuff
 
 The events in a user's cart are stored in local storage on the front end.
 
-## `POST api/v1/authorized/users/:user_id/checkout`
+## `POST api/v1/protected/users/:user_id/checkout`
 
 Buying and checking out a list of events.
 
@@ -131,43 +194,3 @@ One of the event ids are not valid events for the given user.
 ```
 
 #### `401 UNAUTHORIZED`
-
-
-# Starred Stuff
-
-## `POST api/v1/authorized/users/:user_id/starred`
-
-Adding a single event to a user's starred list.
-
-### Request Body
-
-```jsonld=
-{
-    "event_id": EVENT_ID
-}
-```
-
-### Responses
-
-#### `200 OK`
-
-The event was added successfully.
-
-#### `400 OK`
-
-The event id was not a valid event for the user.
-
-```jsonld=
-{
-    "error_message": STRING
-}
-```
-
-#### `401 UNAUTHORIZED`
-
-
-## `DELETE api/v1/authorized/users/:user_id/starred`
-
-Deleting an event from a user's starred list.
-
-This routes has identical request and responses as the `POST api/v1/users/:user_id/starred` route except it will not check the validity of an event id to throw a `400`.
