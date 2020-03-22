@@ -1,16 +1,30 @@
 # LLB API Specification
 
-Any routes with the `authorized` path are authorized routes and require a valid JWT.
+Any routes with the `protected` path are routes and require a valid JWT token. This token must be placed in the header with the name "access_token".
 
-Any response of `401 UNAUTHORIZED` indicates that a user does not have a valid access token JWT header.
+Any response of `401 UNAUTHORIZED` with the following body indicates that the user's access_token is expired. In this case the client should initiate a new login, or call the `refresh` route with a valid refresh_token JWT to recieve a new access_token.
 
-## `GET api/v1/events`
-### `GET api/v1/protected/users/:user_id/events/signed_up`
-### `GET api/v1/protected/users/:user_id/events/qualified`
-### `GET api/v1/protected/users/:user_id/starred`
+```json
+"Given access_token is expired"
+```
 
-Getting a list of events. Either all events, all events a user is signed up for, all events
-a user is qualified for, or all events a user has stared as wanting to attend.
+
+# Getting Events
+
+## `GET api/v1/protected/events/qualified`
+
+Get a list of events that the calling user is qualified for. This includes events a user is already signed up for.
+
+For General Public: Any event happening in the next 5 days are eligible.
+For Participating Families: Any event happening in the future.
+For Admins: Any  event happening in the future.
+
+## `GET api/v1/protected/events/signed_up`
+
+Get all of the events happening in the future that the given user is signed up for.
+
+##### qualified and signed_up have the same query parameters and responses
+
 
 ### Query Params
 
@@ -56,8 +70,45 @@ The events were sent successfully.
 ```
 
 
+## `GET api/v1/protected/events?ids=1,2,3,...`
 
-## `GET api/v1/events/:event_id`
+Get the event bodies for the events with the ids that are specified in the query parameter.
+
+### Query Params
+
+##### ids: INT-LIST
+
+The event ids that are being requested. Ids are numbers and they should be seperated by a single comma. If this query parameter is missing, this route returns an empty list. Ignore duplicated values. Ignore ids that do not correspond to any existing event.
+
+### Responses
+
+Equivelent to above routes:
+
+```json
+{
+  "events": [
+    {
+      "id": ID,
+      "title": STRING,
+      "spotsAvailable": INT,
+      "thumbnail": URL,
+      "details": {
+        "description": STRING,
+        "location": STRING,
+        "start": TIMESTAMP,
+        "end": TIMESTAMP
+      }
+    },
+    ...
+  ],
+  "totalCount": INTEGER
+}
+```
+
+
+# Single Event
+
+## `GET api/v1/protected/events/:event_id`
 
 Gets a specific event with the specified id.
 
@@ -88,6 +139,44 @@ The event was retrieved successfully.
 }
 ```
 
+## `POST api/v1/protected/events/`
+
+Create a new event. This route must be called by an admin.
+
+### Request Body
+
+```json
+{
+  "title": STRING,
+  "spotsAvailable": INT,
+  "thumbnail": URL,
+  "details": {
+    "description": STRING,
+    "location": STRING,
+    "start": TIMESTAMP,
+    "end": TIMESTAMP
+  }
+}
+```
+
+There is an open question on how thumbnails should be handled.
+
+### Responses
+
+#### `200 OK`
+
+Everything's okay
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
+
+
+
 
 # Account Creation Flow
 
@@ -98,23 +187,25 @@ Must be made by a GP user.
 Potentially adding bottle nose to prevent multiple denied requests.
 Allow multiple outstanding requests?
 
-Request
+### Request Body
 ```json
 {
   "description": "STRING"
 }
 ```
 
-Response
-`200 OK`
-`429 TOO MANY REQUESTS`
+### Responses
+#### `200 OK`
+#### `429 TOO MANY REQUESTS`
 
 ## `GET api/v1/protected/requests`
 
 Getting all active requests.
 Must be called by an admin.
 
-Response
+### Responses
+
+#### `200 OK`
 ```json
 {
   "requests": [
@@ -128,24 +219,61 @@ Response
 }
 ```
 
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
+
 ## `POST api/v1/protected/requests/:request_id/approve`
 ## `POST api/v1/protected/requests/:request_id/reject`
 
 Approving or rejecting a request by a user to become a PF.
 Must be called by an admin.
-Always `200 OK`.
+
+### Path Params
+
+#### `requst_id`
+
+The id of the request that is being modified.
+
+### Responses
+#### `200 OK`
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
 
 
 ## `GET api/v1/protected/requests/:request_id`
 
-Getting the status of a particular request, tbd, approved, or rejected
+Getting the status of a particular request, tbd, approved, or rejected. The user making this call must be either an admin or be the user that initiated this request.
 
-Response
+This route may be changed to not require a request_id and instead just get reqest statues based on the user's credentials.
+
+### Responses
+
+#### `200 OK`
 ```json
 {
   "status": "APPROVED" | "REJECTED" | "PENDING"
 }
 ```
+
+#### `401 Unauthorized`
+```json
+The resource <request_id> is not owned by the calling user and is thus not accessible
+```
+
+If the user is not an admin and is requesting the status of a request they did not make.
+
+
 
 
 
