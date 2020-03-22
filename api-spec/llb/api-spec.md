@@ -22,6 +22,12 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`POST api/v1/protected/requests/:request_id/approve`](#-post-api-v1-protected-requests--request-id-approve-)
   * [`POST api/v1/protected/requests/:request_id/reject`](#-post-api-v1-protected-requests--request-id-reject-)
   * [`GET api/v1/protected/requests/:request_id`](#-get-api-v1-protected-requests--request-id-)
+- [Site Announcments](#site-announcments)
+  * [`GET api/v1/protected/announcements`](#-get-api-v1-protected-announcements-)
+  * [`GET api/v1/protected/announcements/:event_id`](#-get-api-v1-protected-announcements--event-id-)
+  * [`POST api/v1/protected/announcements`](#-post-api-v1-protected-announcements-)
+  * [`POST api/v1/protected/announcements/:event_id`](#-post-api-v1-protected-announcements--event-id-)
+  * [`DELETE /api/v1/protected/announcements/:announcement_id`](#-delete--api-v1-protected-announcements--announcement-id-)
 - [Cart Stuff (WIP)](#cart-stuff)
   * [`POST api/v1/protected/users/:user_id/checkout`](#-post-api-v1-protected-users--user-id-checkout-)
 
@@ -294,6 +300,166 @@ If the user is not an admin and is requesting the status of a request they did n
 
 
 
+
+
+# Site Announcments
+
+**NOTE: Site-wide and event specific announcments have uniquely identifying ID numbers.**
+
+## `GET api/v1/protected/announcements`
+
+Gets a list of site-wide announcements. The announcements will be returned in chronological order, from newest to oldest.
+
+### Query Params
+
+##### start: DATE-STRING
+
+The beginning date of when to get announcements from. All returned announcements are created ON or after the given date string that is given in mm/dd/yyyy format, e.g. 01/19/2020. Defaults to 3 weeks from `end` or the current date.
+
+##### end: DATE-STRING
+
+The end date of when to get announcements from. All returned announcements will happen ON or before the given date string that is given in mm/dd/yyyy format, e.g. 12/03/2009. Defaults to the current date.
+
+##### count: INTEGER
+
+The maximum number of announcements to return. The route will return AT MOST count number of announcements. Defaults to 50 or all events that exist.
+
+### Responses
+
+#### `200 OK`
+
+The announcements were retrieved successfully.
+
+```json
+{
+  "announcements": [
+    {
+      "id": ID,
+      "title": STRING,
+      "description": STRING,
+      "created": TIMESTAMP
+    },
+    ...
+  ],
+  "totalCount": INTEGER
+}
+```
+
+
+## `GET api/v1/protected/announcements/:event_id`
+
+Get any announcements that are specific to a particular event. Events can have multiple announcements associated with them. Announcements should be returned in order of how recent they were created.
+
+### Path Params
+
+#### `event_id`
+
+The event id of the event who's announcements are being queried
+
+### Responses
+
+#### `200 OK`
+
+The announcements were retrieved successfully.
+
+```json
+{
+  "announcements": [
+    {
+      "id": ID,
+      "title": STRING,
+      "description": STRING,
+      "created": TIMESTAMP
+    },
+    ...
+  ],
+  "totalCount": INTEGER
+}
+```
+
+
+## `POST api/v1/protected/announcements`
+
+Creates a new site-wide announcement. Can only be accessed by admins.
+
+### Request
+
+Body:
+
+```json
+{
+    "title": STRING,
+    "description": STRING
+}
+```
+
+### Responses
+
+#### `200 OK`
+
+The announcement was created successfully.
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
+
+## `POST api/v1/protected/announcements/:event_id`
+
+Creates a new announcement for the given event. Can only be accessed by admins.
+
+### Request
+
+Body:
+
+```json
+{
+    "title": STRING,
+    "description": STRING
+}
+```
+
+### Responses
+
+#### `200 OK`
+
+The announcement was created successfully.
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
+
+
+## `DELETE /api/v1/protected/announcements/:announcement_id`
+
+Deletes an announcment with the specified announcment id. This route can be used to delete site-wide or event specific because they have unique announcement identifiers. This route can only be called by an admin.
+
+### Path Params
+
+#### `announcment_id`
+
+The ID of the announcement being deleted.
+
+### Requests
+
+#### `200 OK`
+
+The announcement was deleted successfully.
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
 
 
 
