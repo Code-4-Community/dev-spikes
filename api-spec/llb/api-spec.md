@@ -8,6 +8,24 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
 "Given access_token is expired"
 ```
 
+# Table Of Contents
+- [Getting Events](#getting-events)
+  * [`GET api/v1/protected/events/qualified`](#-get-api-v1-protected-events-qualified-)
+  * [`GET api/v1/protected/events/signed_up`](#-get-api-v1-protected-events-signed-up-)
+  * [`GET api/v1/protected/events?ids=1,2,3,...`](#-get-api-v1-protected-events-ids-1-2-3--)
+- [Single Event](#single-event)
+  * [`GET api/v1/protected/events/:event_id`](#-get-api-v1-protected-events--event-id-)
+  * [`POST api/v1/protected/events/`](#-post-api-v1-protected-events--)
+- [Account Creation Flow](#account-creation-flow)
+  * [`POST api/v1/protected/requests`](#-post-api-v1-protected-requests-)
+  * [`GET api/v1/protected/requests`](#-get-api-v1-protected-requests-)
+  * [`POST api/v1/protected/requests/:request_id/approve`](#-post-api-v1-protected-requests--request-id-approve-)
+  * [`POST api/v1/protected/requests/:request_id/reject`](#-post-api-v1-protected-requests--request-id-reject-)
+  * [`GET api/v1/protected/requests/:request_id`](#-get-api-v1-protected-requests--request-id-)
+- [Cart Stuff (WIP)](#cart-stuff)
+  * [`POST api/v1/protected/users/:user_id/checkout`](#-post-api-v1-protected-users--user-id-checkout-)
+
+
 
 # Getting Events
 
