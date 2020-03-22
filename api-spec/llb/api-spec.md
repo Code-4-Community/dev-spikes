@@ -5,9 +5,9 @@ Any routes with the `authorized` path are authorized routes and require a valid 
 Any response of `401 UNAUTHORIZED` indicates that a user does not have a valid access token JWT header.
 
 ## `GET api/v1/events`
-### `GET api/v1/authorized/users/:user_id/events/signed_up`
-### `GET api/v1/authorized/users/:user_id/events/qualified`
-### `GET api/v1/authorized/users/:user_id/starred`
+### `GET api/v1/protected/users/:user_id/events/signed_up`
+### `GET api/v1/protected/users/:user_id/events/qualified`
+### `GET api/v1/protected/users/:user_id/starred`
 
 Getting a list of events. Either all events, all events a user is signed up for, all events
 a user is qualified for, or all events a user has stared as wanting to attend.
@@ -91,7 +91,7 @@ The event was retrieved successfully.
 
 # Account Creation Flow
 
-## `POST api/v1/requests`
+## `POST api/v1/protected/requests`
 
 Making a request to be upgraded from GP to PF.
 Must be made by a GP user.
@@ -109,7 +109,7 @@ Response
 `200 OK`
 `429 TOO MANY REQUESTS`
 
-## `GET api/v1/requests`
+## `GET api/v1/protected/requests`
 
 Getting all active requests.
 Must be called by an admin.
@@ -128,15 +128,15 @@ Response
 }
 ```
 
-## `POST api/v1/requests/:request_id/approve`
-## `POST api/v1/requests/:request_id/reject`
+## `POST api/v1/protected/requests/:request_id/approve`
+## `POST api/v1/protected/requests/:request_id/reject`
 
 Approving or rejecting a request by a user to become a PF.
 Must be called by an admin.
 Always `200 OK`.
 
 
-## `GET api/v1/requests/:request_id`
+## `GET api/v1/protected/requests/:request_id`
 
 Getting the status of a particular request, tbd, approved, or rejected
 
@@ -157,7 +157,7 @@ Response
 
 The events in a user's cart are stored in local storage on the front end.
 
-## `POST api/v1/authorized/users/:user_id/checkout`
+## `POST api/v1/protected/users/:user_id/checkout`
 
 Buying and checking out a list of events.
 
