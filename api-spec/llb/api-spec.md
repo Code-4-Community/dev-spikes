@@ -22,7 +22,7 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`POST api/v1/protected/requests/:request_id/approve`](#-post-api-v1-protected-requests--request-id-approve-)
   * [`POST api/v1/protected/requests/:request_id/reject`](#-post-api-v1-protected-requests--request-id-reject-)
   * [`GET api/v1/protected/requests/:request_id`](#-get-api-v1-protected-requests--request-id-)
-- [Site Announcments](#site-announcments)
+- [Site Announcements](#site-announcements)
   * [`GET api/v1/protected/announcements`](#-get-api-v1-protected-announcements-)
   * [`GET api/v1/protected/announcements/:event_id`](#-get-api-v1-protected-announcements--event-id-)
   * [`POST api/v1/protected/announcements`](#-post-api-v1-protected-announcements-)
@@ -52,7 +52,7 @@ Get all of the events happening in the future that the given user is signed up f
 
 ### Query Params
 
-##### start: DATE-STRING 
+##### start: DATE-STRING
 
 The beginning date of when to get events from. All returned events will happen ON or after
 the given date string that is given in mm/dd/yyyy format, ie: 01/19/2020
@@ -317,9 +317,9 @@ If the user is not an admin and is requesting the status of a request they did n
 
 
 
-# Site Announcments
+# Site Announcements
 
-**NOTE: Site-wide and event specific announcments have uniquely identifying ID numbers.**
+**NOTE: Site-wide and event specific announcements have uniquely identifying ID numbers.**
 
 ## `GET api/v1/protected/announcements`
 
