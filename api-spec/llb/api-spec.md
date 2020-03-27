@@ -189,7 +189,22 @@ There is an open question on how thumbnails should be handled.
 
 #### `200 OK`
 
-Everything's okay
+The event was created successfully. Will return the event that was just created (including the generated id).
+
+```json
+{
+  "id": ID,
+  "title": STRING,
+  "spotsAvailable": INT,
+  "thumbnail": URL,
+  "details": {
+    "description": STRING,
+    "location": STRING,
+    "start": TIMESTAMP,
+    "end": TIMESTAMP
+  }
+}
+```
 
 #### `401 Unauthorized`
 
