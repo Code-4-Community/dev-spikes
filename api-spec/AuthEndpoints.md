@@ -26,9 +26,9 @@ Access Token Composition:
     - 2: Account awaiting admin confirmation.
 
 For any protected route, if the access token included in the request header has expired the backend will return the string below it indicate that a refresh is necessary.
-
-**'Given access token is expired or invalid'**
-
+```json
+ "Given access token is expired or invalid"
+```
 
 
 **All routes are prepended with `api/v1/` unless otherwise noted!!**
