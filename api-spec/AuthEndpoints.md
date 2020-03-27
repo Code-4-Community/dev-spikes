@@ -25,6 +25,12 @@ Access Token Composition:
     - 1: Account confirmed.
     - 2: Account awaiting admin confirmation.
 
+For any protected route, if the access token included in the request header has expired the backend will return the string below it indicate that a refresh is necessary.
+```json
+ "Given access token is expired or invalid"
+```
+
+
 **All routes are prepended with `api/v1/` unless otherwise noted!!**
 
 ## `POST user/login`
@@ -38,12 +44,14 @@ Body:
 {
     "username" : EMAIL or USERNAME,
     "password" : STRING,
-    "rememberMe": BOOLEAN
+    "rememberMe": BOOLEAN  
 }
 ```
   An EMAIL is a string representing a user's email.
 
   A USERNAME is a string representing a user's username.
+  
+  rememberMe is a feature to be included in future versions.
   
 ### __Responses__ 
  
@@ -121,7 +129,6 @@ Body
 ```json
 {
   "email" : EMAIL,
-  "username": STRING,
   "password" : PASSWORD,
   "firstName" : STRING,
   "lastName" : STRING
