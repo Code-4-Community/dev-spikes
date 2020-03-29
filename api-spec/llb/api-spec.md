@@ -369,7 +369,7 @@ Get any announcements that are specific to a particular event. Events can have m
 
 #### `event_id`
 
-The event id of the event who's announcements are being queried
+The ID of the event whose announcements are being queried
 
 ### Responses
 
