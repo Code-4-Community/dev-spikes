@@ -414,6 +414,15 @@ Body:
 
 The announcement was created successfully.
 
+```json
+{
+  "id": ID,
+  "title": STRING,
+  "description": STRING,
+  "created": TIMESTAMP
+}
+```
+
 #### `401 Unauthorized`
 
 ```json
