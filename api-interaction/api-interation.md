@@ -1,7 +1,7 @@
 # Calling API Routes
 ## Example: Create Event (LLB)
 ### Using Postman
-#####Login 
+##### Login 
 Use postman to get a handle of how the endpoint should work before you start coding it. 
 1. Download at https://www.postman.com/
 2. Create a new collection called "LLB"
@@ -48,7 +48,7 @@ Use postman to get a handle of how the endpoint should work before you start cod
 7. The values should be whatever the repsonse was from step 9 of the login.
 8. Hit send, if you don't get an error back, you've formatted the body correctly.
 
-###Integrating the call into the Frontend
+### Integrating the call into the Frontend
 ###### In src/api/api.js
 
     async function createEvent(event) {
