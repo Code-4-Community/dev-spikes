@@ -18,16 +18,19 @@ Use postman to get a handle of how the endpoint should work before you start cod
 7. Select Raw as the option for the body.
 8. Hit the blue "send" button
 9. you should get a response that looks like this
-    {
-        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcml2aWxlZ2VMZXZlbCI6MiwiaXNzIjoiYzRjIiwiZXhwIjoxNTg2NzMzNzkwLCJ1c2VySWQiOjd9.mqcIs4iRduXAXxu40IepjrMnc1ZOJlZUHyr_edOIcqo",
-        "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcml2aWxlZ2VMZXZlbCI6MiwiaXNzIjoiYzRjIiwiZXhwIjoxNTg3MzM2NzkwLCJ1c2VySWQiOjd9.CzOSnbhjeGYZCXrMWtgoH9y3Xrs_uUUNOucmWfZGD_0"
-    }
+```json
+{
+"accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcml2aWxlZ2VMZXZlbCI6MiwiaXNzIjoiYzRjIiwiZXhwIjoxNTg2NzMzNzkwLCJ1c2VySWQiOjd9.mqcIs4iRduXAXxu40IepjrMnc1ZOJlZUHyr_edOIcqo",
+"refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcml2aWxlZ2VMZXZlbCI6MiwiaXNzIjoiYzRjIiwiZXhwIjoxNTg3MzM2NzkwLCJ1c2VySWQiOjd9.CzOSnbhjeGYZCXrMWtgoH9y3Xrs_uUUNOucmWfZGD_0"
+}
+```
 
-#####Create Event
+##### Create Event
 1. Create a new Request
 2. Make another Post named "create event"
 3. Use this url: http://lucy.c4cneu.com/api/v1/protected/events/
 4. Use this as the body: 
+```json
     {
     	"title":"afsasf",
     	"spotsAvailable":10,
@@ -39,6 +42,7 @@ Use postman to get a handle of how the endpoint should work before you start cod
     		"end": 62072329438
     	}
     }
+```
 5. Since this is a protected route, we need to pass in the jwt values to access it.
 6. Go to the headers section by body, add keys X-Access-Token and X-Refresh-Token
 7. The values should be whatever the repsonse was from step 9 of the login.
