@@ -403,8 +403,12 @@ Body:
 
 ```json
 {
-    "title": STRING,
-    "description": STRING
+    "announcement": {
+        "title": STRING,
+        "description": STRING,
+        "id": ID,
+        "created": TIMESTAMP
+    }
 }
 ```
 
