@@ -86,10 +86,10 @@ In the script part of the vue template, "import api from '../api/api';"
 Our form calls the onSubmit function when the. form is supposed to be saved to the database.
     
         onSubmit() {
-          this.$validator.validateAll().then((result) => {
+          this.$validator.validateAll().then(async (result) => {
             if (result) {
               try {
-                api.createEvent(this.event);
+                await api.createEvent(this.event);
               } catch (err) {
                 this.error = err;
               }
