@@ -11,8 +11,8 @@ Use postman to get a handle of how the endpoint should work before you start cod
 6. Hit the body section and the body of the request in:
 ```json
 {
-	"email": "test@gmail.com",
-	"password": "test"
+	"email": "admin@email.com",
+	"password": "secret"
 }
 ```
 7. Select Raw as the option for the body.
