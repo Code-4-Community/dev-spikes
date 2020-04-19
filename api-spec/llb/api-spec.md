@@ -405,9 +405,7 @@ Body:
 {
     "announcement": {
         "title": STRING,
-        "description": STRING,
-        "id": ID,
-        "created": TIMESTAMP
+        "description": STRING
     }
 }
 ```
@@ -455,6 +453,15 @@ Body:
 #### `200 OK`
 
 The announcement was created successfully.
+
+```json
+{
+  "id": ID,
+  "title": STRING,
+  "description": STRING,
+  "created": TIMESTAMP
+}
+```
 
 #### `401 Unauthorized`
 
