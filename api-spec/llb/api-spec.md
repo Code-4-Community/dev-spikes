@@ -384,7 +384,8 @@ The announcements were retrieved successfully.
       "id": ID,
       "title": STRING,
       "description": STRING,
-      "created": TIMESTAMP
+      "created": TIMESTAMP,
+      "event_id": ID
     },
     ...
   ],
@@ -405,9 +406,7 @@ Body:
 {
     "announcement": {
         "title": STRING,
-        "description": STRING,
-        "id": ID,
-        "created": TIMESTAMP
+        "description": STRING
     }
 }
 ```
@@ -455,6 +454,16 @@ Body:
 #### `200 OK`
 
 The announcement was created successfully.
+
+```json
+{
+  "id": ID,
+  "title": STRING,
+  "description": STRING,
+  "created": TIMESTAMP,
+  "event_id": ID
+}
+```
 
 #### `401 Unauthorized`
 
