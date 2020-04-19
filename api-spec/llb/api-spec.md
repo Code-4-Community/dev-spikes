@@ -153,6 +153,7 @@ The event was retrieved successfully.
   "id": ID,
   "title": STRING,
   "spotsAvailable": INT,
+  "capacity": INT,
   "thumbnail": URL,
   "details": {
     "description": STRING,
@@ -196,6 +197,7 @@ The event was created successfully. Will return the event that was just created 
   "id": ID,
   "title": STRING,
   "spotsAvailable": INT,
+  "capacity": INT,
   "thumbnail": URL,
   "details": {
     "description": STRING,
