@@ -384,7 +384,8 @@ The announcements were retrieved successfully.
       "id": ID,
       "title": STRING,
       "description": STRING,
-      "created": TIMESTAMP
+      "created": TIMESTAMP,
+      "event_id": ID
     },
     ...
   ],
@@ -459,7 +460,8 @@ The announcement was created successfully.
   "id": ID,
   "title": STRING,
   "description": STRING,
-  "created": TIMESTAMP
+  "created": TIMESTAMP,
+  "event_id": ID
 }
 ```
 
