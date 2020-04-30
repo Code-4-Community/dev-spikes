@@ -28,8 +28,10 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`POST api/v1/protected/announcements`](#-post-api-v1-protected-announcements-)
   * [`POST api/v1/protected/announcements/:event_id`](#-post-api-v1-protected-announcements--event-id-)
   * [`DELETE /api/v1/protected/announcements/:announcement_id`](#-delete--api-v1-protected-announcements--announcement-id-)
-- [Cart Stuff (WIP)](#cart-stuff)
-  * [`POST api/v1/protected/users/:user_id/checkout`](#-post-api-v1-protected-users--user-id-checkout-)
+- [Event Checkout and Registration](#checkout-registration)
+  * [`POST api/v1/protected/checkout/session`](#-post-api-v1-protected-checkout-session)
+  * [`POST api/v1/protected/checkout/event`](#-post-api-v1-protected-checkout-event)
+  * [`POST api/v1/webhooks/stripe`](#-post-api-v1-webhooks-stripe)
 
 
 
@@ -504,29 +506,31 @@ If the calling user is not an admin.
 
 
 
-# Cart Stuff
+# Event Checkout and Registration  
 
-The events in a user's cart are stored in local storage on the front end.
+The events in a user's cart are stored in Vuex on the front end.
 
-## `POST api/v1/protected/users/:user_id/checkout`
+## `POST api/v1/protected/checkout/session`
 
-Buying and checking out a list of events.
+Buying and checking out a list of events, with Stripe
 
 ### Request Body
 
-```json=
-{
-    "events": [
-        {
-            "id": EVENT_ID,
-            "tickets": INTEGER
-        },
-        ...
-    ]
-}
+```
+const body = {
+  lineItems: cartEvents.map(event => ({
+    id: event.id,
+    name: event.title,
+    description: event.details.description,
+    amount: 5,
+    currency: 'usd',
+    quantity: 1,
+  })),
+  successUrl: 'http://localhost:8080/?session_id={CHECKOUT_SESSION_ID}',
+  cancelUrl: 'http://localhost:8080/checkout',
+};
 ```
 
-- EVENT_ID: A UUID object corresponding to an event the user is trying to sign up for.
 
 ### Responses
 
