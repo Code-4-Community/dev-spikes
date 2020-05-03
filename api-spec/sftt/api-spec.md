@@ -305,7 +305,7 @@ Gets blocks done, in progress, todo for all of Boston
 {
   "blocksCompleted": INT,
   "blocksReserved": INT,
-  "blocksTodo": INT
+  "blocksOpen": INT
 }
 ```
 
