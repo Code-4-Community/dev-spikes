@@ -144,9 +144,47 @@ Create a team. The team will only contain the member that created it who is now 
 
 ```json
 {
-  "name": STRING
+  "name": STRING,
+  "bio": STRING,
+  "goal": INT
+  "goalCompletionDate": DATE,
+  "inviteEmails": [
+    STRING,
+    ...
+  ]
 }
 ```
+
+Goal is a number of blocks the team would like to complete by the goalCompleteDate. inviteEmails are a list of emails that that should be sent an invitation email to join the team. The team leader's email should not be included. This acts functionally the same as the `/teams/:team_id/invite` route.
+
+### Response
+
+##### `200 OK`
+
+```json
+{
+  "id": INT,
+  "name": STRING,
+  "bio": STRING,
+  "goal" INT,
+  "goalCompleteDate": DATE,
+  "blocksCompleted": INT,
+  "blocksReserved": INT,
+  "members": [
+    {
+      "id": INT,
+      "username": STRING,
+      "blocksCompleted": INT,
+      "blocksReserved": INT,
+      "teamRole": INT
+    },
+    ...
+  ],
+}
+```
+
+This is the same as the JSON returned for `GET /teams/:team_id`
+
 
 ## `POST /teams/:team_id/invite`
 
@@ -232,6 +270,9 @@ Gets the information for this specific team. Including the members with how many
 {
   "id": INT,
   "name": STRING,
+  "bio": STRING,
+  "goal" INT,
+  "goalCompleteDate": DATE,
   "blocksCompleted": INT,
   "blocksReserved": INT,
   "members": [
