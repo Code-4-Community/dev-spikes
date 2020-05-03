@@ -281,7 +281,7 @@ Gets blocks completed leaderboard for both teams and individuals. Will include u
   "teams": [
     {
       "id": INT,
-      "name": INT,
+      "name": STRING,
       "blocksCompleted": INT,
       "blocksReserved": INT
     },
@@ -290,7 +290,7 @@ Gets blocks completed leaderboard for both teams and individuals. Will include u
   "individuals": [
     {
       "id": INT,
-      "username": INT,
+      "username": STRING,
       "blocksCompleted": INT,
       "blocksReserved": INT
     },
