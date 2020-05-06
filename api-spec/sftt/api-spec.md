@@ -194,8 +194,11 @@ Invite someone to join a team. Will send an email to all specified people that i
 
 ```json
 {
-  "emails": [
-    STRING,
+  "invites": [
+    {
+      "name": STRING,
+      "email" STRING
+    },
     ...
   ]
 }
