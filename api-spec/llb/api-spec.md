@@ -16,6 +16,8 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
 - [Single Event](#single-event)
   * [`GET api/v1/protected/events/:event_id`](#-get-api-v1-protected-events--event-id-)
   * [`POST api/v1/protected/events/`](#-post-api-v1-protected-events--)
+  * [`PUT api/v1/protected/events/:event_id`](#-put-api-v1-protected-events--event-id-)
+  * [`DELETE api/v1/protected/events/:event_id`](#-delete-api-v1-protected-events--event-id-)
 - [Account Creation Flow](#account-creation-flow)
   * [`POST api/v1/protected/requests`](#-post-api-v1-protected-requests-)
   * [`GET api/v1/protected/requests`](#-get-api-v1-protected-requests-)
@@ -218,8 +220,78 @@ The calling user does not have the required privilege level
 
 If the calling user is not an admin.
 
+## `PUT api/v1/protected/events/:event_id`
 
+Update an existing event. This route must be called by an admin. All fields are optional.
 
+### Request Body
+
+```json
+{
+  "title": STRING,
+  "spotsAvailable": INT,
+  "thumbnail": URL,
+  "details": {
+    "description": STRING,
+    "location": STRING,
+    "start": TIMESTAMP,
+    "end": TIMESTAMP
+  }
+}
+```
+
+### Responses
+
+#### `200 OK`
+
+The event was updated successfully. Will return the event that was just created (including the generated id).
+
+```json
+{
+  "id": ID,
+  "title": STRING,
+  "spotsAvailable": INT,
+  "thumbnail": URL,
+  "details": {
+    "description": STRING,
+    "location": STRING,
+    "start": TIMESTAMP,
+    "end": TIMESTAMP
+  }
+}
+```
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
+
+## `DELETE api/v1/protected/events/:event_id`
+
+Delete an existing event. This route must be called by an admin.
+
+### Responses
+
+#### `200 OK`
+
+The event was deleted successfully. Returns the ID of the deleted event.
+
+```json
+{
+  "id": ID
+}
+```
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
 
 # Account Creation Flow
 
