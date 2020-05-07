@@ -310,7 +310,9 @@ Allow multiple outstanding requests?
 ```
 
 ### Responses
+
 #### `200 OK`
+
 #### `429 TOO MANY REQUESTS`
 
 ## `GET api/v1/protected/requests`
