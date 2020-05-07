@@ -158,6 +158,65 @@ Body:
 "Error creating new user, given email %s already used"
 ```
 
+## 'POST user/pfsignup
+
+> Used for registering a participating family
+
+### __Request__
+
+#### Body
+
+```json
+{
+  "password": PASSWORD,
+  "parents": [
+    {
+      "name": STRING,
+      "phoneNumber": STRING,
+      "address": STRING,
+      "city": STRING,
+      "state": STRING,
+      "zipCode": STRING,
+      "email": EMAIL,
+      "allergies": STRING,
+    },
+    ...
+  ],
+  "children": [
+    {
+      "name": STRING,
+      "dateOfBirth": DATE-STRING,
+      "pronouns": STRING,
+      "schoolyear": STRING,
+      "school": STRING,
+      "diagnosis": STRING,
+      "medications": STRING,
+      "notes": STRING,
+    }
+    ...
+  ],
+}
+```
+
+- EMAIL: Is a valid email string.
+- PASSWORD: Is a valid password string that is at least 8 characters.
+
+### __Responses__ 
+
+#### `201 Created`
+> An account has been successfully created.
+
+Body: 
+```json
+{
+  "accessToken"  : JWT,
+  "refreshToken" : JWT
+}
+```
+ 
+#### `400 Bad Request`
+> Malformed request body.
+******
 
 ## `GET user/verify/:secret_key`
 
@@ -177,9 +236,6 @@ Body:
 
 #### `401 Unauthorized`
 > The secret key is invalid or expired.
-
-
-
 
 ## TODO: `GET user/create_secret/:user_id`
 
