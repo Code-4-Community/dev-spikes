@@ -1,11 +1,8 @@
 # Login and Token Endpoints
 
-#### Common Path:
-
-__All routes are prepended with `api/v1/` unless otherwise noted!!__
-
 #### Common Headers: 
-```json
+For any request with a body it is assumed that this header exists:
+```
   Content-Type: application/json
 ```
 
@@ -31,7 +28,11 @@ For any protected route, if the access token included in the request header is e
  "Given access token is expired or invalid"
 ```
 
-# __ROUTES__
+# __Unprotected Routes__
+
+These routes are called by a user that is not yet authenticated.
+
+**These routes all have the prefix `api/v1/`
 
 ## `POST user/login`
 
@@ -195,3 +196,28 @@ PATH: `GET user/create_secret/:user_id`
 
 #### `400 BAD REQUEST`
 > The given user id could not be found.
+
+
+
+
+# __Protected Routes__
+
+These routes are called by an authenticated user. These routes can only be called with a valid access JWT token specified in the following header.
+
+```
+X-Access-Token: JWT-String
+```
+
+**These routes all have the prefix `api/v1/protected/`
+
+## `DELETE /user`
+
+Deletes the user that called this route as determined by their access JWT.
+
+This route is only implemented to support testing and does not invalidate user access tokens. This is __not safe__ to be called by the frontend client for this reason.
+
+### __Responses__
+
+##### `200 OK`
+
+The user no longer exists
