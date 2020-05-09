@@ -226,3 +226,36 @@ This route is only implemented to support testing and does not invalidate user a
 ##### `200 OK`
 
 The user no longer exists
+
+
+
+## `POST /user/change_password`
+
+Allows a user to change their password when already authenticated.
+
+### __Request__
+
+```json
+{
+  "currentPassword": STRING,
+  "newPassword": STRING
+}
+```
+
+passwords should be strings with length >= 8 characters.
+
+### __Responses__
+
+##### `200 OK`
+
+> The password change was successful.
+
+##### `400 BAD REQUEST`
+
+> If the request was malformed.
+
+##### `401 Unauthorized`
+
+> The currentPassword does not match the calling user's current password.
+
+
