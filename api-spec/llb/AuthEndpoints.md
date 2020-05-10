@@ -252,3 +252,70 @@ passwords should be strings with length >= 8 characters.
 
 > The currentPassword does not match the calling user's current password.
 
+## `POST user/signup/pf`
+
+>Used for registering as a participating family.
+
+### __Request__
+
+Body:
+```json
+{
+  "mainContact": {
+    "firstName": STRING,
+    "lastName": STRING,
+    "email": EMAIL,
+    "location": {
+      "address": STRING,
+      "city": STRING,
+      "state": STRING,
+      "zipCode": STRING,
+    },
+    "phoneNumber": STRING,
+    "allergies": STRING OR NULL,
+  },
+  "additionalContacts": [
+    {
+      "firstName": STRING,
+      "lastName": STRING,
+      "phoneNumber": STRING,
+      "email": STRING,
+      "shouldSendEmails": BOOLEAN,
+      "allergies": STRING
+    },
+    ...
+  ],
+  "children": [
+    {
+      "firstName": STRING,
+      "lastName": STRING,
+      "dateOfBirth": DATE-STRING,
+      "pronouns": STRING,
+      "schoolYear": STRING,
+      "school": STRING,
+      "allergies": STRING OR NULL,
+      "diagnosis": STRING OR NULL,
+      "medications": STRING OR NULL,
+      "notes": STRING OR NULL,
+    }
+    ...
+  ],
+}
+```
+
+  An EMAIL is a string representing a user's email.
+  
+### __Responses__ 
+ 
+
+#### `201 Created`
+
+> The email/password combination is valid.
+
+```
+#### `400 Bad Request`
+> Malformed request.
+
+#### `401 Unauthorized`
+> The username/password combination is invalid.
+
