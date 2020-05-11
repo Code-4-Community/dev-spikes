@@ -252,9 +252,12 @@ passwords should be strings with length >= 8 characters.
 
 > The currentPassword does not match the calling user's current password.
 
+
+
 ## `POST user/signup/pf`
 
->Used for registering as a participating family.
+>Used for registering as a participating family. It is expected that a user has already
+>sent a request to the regular sign up first.
 
 ### __Request__
 
@@ -308,14 +311,10 @@ Body:
 ### __Responses__ 
  
 
-#### `201 Created`
+#### `200 OK`
 
-> The email/password combination is valid.
+> The information was successfuly stored and a request was made to the admins to become a pf.
 
-```
 #### `400 Bad Request`
 > Malformed request.
-
-#### `401 Unauthorized`
-> The username/password combination is invalid.
 
