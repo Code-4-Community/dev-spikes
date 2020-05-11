@@ -15,6 +15,7 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`GET api/v1/protected/events?ids=1,2,3,...`](#-get-api-v1-protected-events-ids-1-2-3--)
 - [Single Event](#single-event)
   * [`GET api/v1/protected/events/:event_id`](#-get-api-v1-protected-events--event-id-)
+  * [`GET api/v1/protected/events/:event_id/registrations`](#-get-api-v1-protected-events--event-id-registrations-)
   * [`POST api/v1/protected/events/`](#-post-api-v1-protected-events--)
   * [`PUT api/v1/protected/events/:event_id`](#-put-api-v1-protected-events--event-id-)
   * [`DELETE api/v1/protected/events/:event_id`](#-delete-api-v1-protected-events--event-id-)
@@ -167,6 +168,52 @@ The event was retrieved successfully.
   }
 }
 ```
+
+## `GET api/v1/protected/events/:event_id/registrations`
+
+Gets a list of users registered for the event with the given id.
+
+### Route Params
+
+##### event_id: ID
+
+The id number of the event that is being queried.
+
+### Responses
+
+#### `200 OK`
+
+The event was retrieved successfully.
+
+```json
+{
+  "registrations": [
+    {
+      "firstName": STRING,
+      "lastName": STRING
+      "email": STRING,
+      "ticketCount": INT
+    },
+    ...
+  ]
+}
+```
+
+#### `400 BAD REQUEST`
+
+```json
+There does not exist an event with id: <id>
+```
+
+If the provided event id does not exist
+
+#### `401 Unauthorized`
+
+```json
+The calling user does not have the required privilege level
+```
+
+If the calling user is not an admin.
 
 ## `POST api/v1/protected/events/`
 
@@ -618,7 +665,6 @@ const body = {
 The purchase was successful.
 
 #### `400 BAD REQUEST`
-
 
 #### `401 UNAUTHORIZED`
 
