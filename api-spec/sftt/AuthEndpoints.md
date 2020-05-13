@@ -166,6 +166,65 @@ Body:
 ```
 
 
+## `POST user/forgot_password/request`
+
+> Used to send a reset password email to a user if they have forgotten their password
+
+### __Request__
+
+```json
+{
+  "email": STRING
+}
+```
+
+### __Responses__
+
+##### `200 OK`
+
+The email was sent to the user successfully
+
+##### `400 BAD REQUEST`
+
+The given email is not associated with any user account
+
+
+
+## `POST user/forgot_password/reset`
+
+> Used to reset a user's password after they have requested a forget password link
+
+### __Request__
+
+```json
+{
+  "secret_key": STRING,
+  "new_password": STRING
+}
+```
+
+The secret key should be determined by the frontend link that the user clicked from their email.
+
+passwords should be strings with length >= 8 characters.
+
+### __Responses__
+
+##### `200 OK`
+
+The user's identity was confirmed and the password was changed successfully.
+
+##### `400 BAD REQUEST`
+
+The new password that was given is an invalid password.
+
+##### `401 UNAUTHORIZED`
+
+The given secret key is invalid and does not refer to an account or was created too long ago to be valid.
+
+
+
+
+
 ## `GET user/verify/:secret_key`
 
 > Used for confirming an account's email
