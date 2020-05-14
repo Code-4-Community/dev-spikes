@@ -119,6 +119,8 @@ Headers:
 ## `POST user/signup`
 
 > Used for signing up a new user.
+>
+>Users will be given the access level of a GP from this route. Users signing up as PF should follow this call with a call to `/protected/users/signup/pf` to sumbit a request to be upgraded to a PF.
 
 ### __Request__
 
@@ -129,7 +131,14 @@ Headers:
   "email" : EMAIL,
   "password" : STRING,
   "firstName" : STRING,
-  "lastName" : STRING
+  "lastName" : STRING,
+  "phoneNumber": STRING,
+  "location": {
+    "address": STRING,
+    "city": STRING,
+    "state": STRING,
+    "zipCode": STRING
+  }
 }
 ```
 
@@ -267,24 +276,27 @@ Body:
   "mainContact": {
     "firstName": STRING,
     "lastName": STRING,
-    "email": EMAIL,
-    "location": {
-      "address": STRING,
-      "city": STRING,
-      "state": STRING,
-      "zipCode": STRING,
-    },
+    "dateOfBirth": TIMESTAMP,
     "phoneNumber": STRING,
+    "pronouns": STRING,
     "allergies": STRING OR NULL,
+    "diagnosis": STRING OR NULL,
+    "medication": STRING OR NULL,
+    "notes": STRING OR NULL,
   },
   "additionalContacts": [
     {
-      "firstName": STRING,
-      "lastName": STRING,
-      "phoneNumber": STRING,
-      "email": STRING,
-      "shouldSendEmails": BOOLEAN,
-      "allergies": STRING
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": EMAIL,
+        "shouldSendEmails": BOOLEAN,
+        "dateOfBirth": TIMESTAMP,
+        "phoneNumber": STRING,
+        "pronouns": STRING,
+        "allergies": STRING OR NULL,
+        "diagnosis": STRING OR NULL,
+        "medication": STRING OR NULL,
+        "notes": STRING OR NULL,
     },
     ...
   ],
@@ -292,10 +304,10 @@ Body:
     {
       "firstName": STRING,
       "lastName": STRING,
-      "dateOfBirth": DATE-STRING,
+      "dateOfBirth": TIMESTAMP,
       "pronouns": STRING,
-      "schoolYear": STRING,
       "school": STRING,
+      "schoolYear": STRING,
       "allergies": STRING OR NULL,
       "diagnosis": STRING OR NULL,
       "medications": STRING OR NULL,
