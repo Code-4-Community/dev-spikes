@@ -119,6 +119,8 @@ Headers:
 ## `POST user/signup`
 
 > Used for signing up a new user.
+>
+>Users will be given the access level of a GP from this route. Users signing up as PF should follow this call with a call to `/protected/users/signup/pf` to sumbit a request to be upgraded to a PF.
 
 ### __Request__
 
@@ -129,7 +131,14 @@ Headers:
   "email" : EMAIL,
   "password" : STRING,
   "firstName" : STRING,
-  "lastName" : STRING
+  "lastName" : STRING,
+  "phoneNumber": STRING,
+  "location": {
+    "address": STRING,
+    "city": STRING,
+    "state": STRING,
+    "zipCode": STRING
+  }
 }
 ```
 
@@ -251,4 +260,73 @@ passwords should be strings with length >= 8 characters.
 ##### `401 Unauthorized`
 
 > The currentPassword does not match the calling user's current password.
+
+
+
+## `POST user/signup/pf`
+
+>Used for registering as a participating family. It is expected that a user has already
+>sent a request to the regular sign up first.
+
+### __Request__
+
+Body:
+```json
+{
+  "mainContact": {
+    "firstName": STRING,
+    "lastName": STRING,
+    "dateOfBirth": TIMESTAMP,
+    "phoneNumber": STRING,
+    "pronouns": STRING,
+    "allergies": STRING OR NULL,
+    "diagnosis": STRING OR NULL,
+    "medication": STRING OR NULL,
+    "notes": STRING OR NULL,
+  },
+  "additionalContacts": [
+    {
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": EMAIL,
+        "shouldSendEmails": BOOLEAN,
+        "dateOfBirth": TIMESTAMP,
+        "phoneNumber": STRING,
+        "pronouns": STRING,
+        "allergies": STRING OR NULL,
+        "diagnosis": STRING OR NULL,
+        "medication": STRING OR NULL,
+        "notes": STRING OR NULL,
+    },
+    ...
+  ],
+  "children": [
+    {
+      "firstName": STRING,
+      "lastName": STRING,
+      "dateOfBirth": TIMESTAMP,
+      "pronouns": STRING,
+      "school": STRING,
+      "schoolYear": STRING,
+      "allergies": STRING OR NULL,
+      "diagnosis": STRING OR NULL,
+      "medications": STRING OR NULL,
+      "notes": STRING OR NULL,
+    }
+    ...
+  ],
+}
+```
+
+  An EMAIL is a string representing a user's email.
+  
+### __Responses__ 
+ 
+
+#### `200 OK`
+
+> The information was successfuly stored and a request was made to the admins to become a pf.
+
+#### `400 Bad Request`
+> Malformed request.
 
