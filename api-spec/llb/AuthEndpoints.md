@@ -263,7 +263,7 @@ passwords should be strings with length >= 8 characters.
 
 
 
-## `POST user/signup/pf`
+## `POST user/contact_info`
 
 >Used for registering as a participating family. It is expected that a user has already
 >sent a request to the regular sign up first.
