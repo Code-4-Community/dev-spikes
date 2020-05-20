@@ -265,8 +265,10 @@ passwords should be strings with length >= 8 characters.
 
 ## `POST user/contact_info`
 
->Used for registering as a participating family. It is expected that a user has already
->sent a request to the regular sign up first.
+>Used for setting famil data as a participating family. It is expected that a user has already
+>sent a request to the regular sign up and exists.
+
+This route does NOT automatically create a PF request. That should be done with a call to `POST /protected/requests`.
 
 ### __Request__
 
