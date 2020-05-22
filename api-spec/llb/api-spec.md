@@ -84,6 +84,7 @@ The events were sent successfully.
       "id": ID,
       "title": STRING,
       "spotsAvailable": INT,
+      "capacity": INT,
       "thumbnail": URL,
       "details": {
         "description": STRING,
@@ -120,6 +121,7 @@ Equivelent to above routes:
       "id": ID,
       "title": STRING,
       "spotsAvailable": INT,
+      "capacity": INT,
       "thumbnail": URL,
       "details": {
         "description": STRING,
@@ -225,6 +227,7 @@ Create a new event. This route must be called by an admin.
 {
   "title": STRING,
   "spotsAvailable": INT,
+  "capacity": INT,
   "thumbnail": URL,
   "details": {
     "description": STRING,
