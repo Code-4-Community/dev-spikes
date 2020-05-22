@@ -352,13 +352,6 @@ Must be made by a GP user.
 Potentially adding bottle nose to prevent multiple denied requests.
 Allow multiple outstanding requests?
 
-### Request Body
-```json
-{
-  "description": "STRING"
-}
-```
-
 ### Responses
 
 #### `200 OK`
@@ -370,6 +363,8 @@ Allow multiple outstanding requests?
 Getting all active requests.
 Must be called by an admin.
 
+User data returned is currently only the main contact's info but can be expanded based on partener's needs
+
 ### Responses
 
 #### `200 OK`
@@ -378,8 +373,13 @@ Must be called by an admin.
   "requests": [
     {
       "id": "request_id STRING",
-      "description": "STRING",
-      "user": "user's name STRING"
+      "user": {
+        "id": STRING,
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": STRING,
+        "phoneNumber": STRING
+      }
     },
     ...
   ]
