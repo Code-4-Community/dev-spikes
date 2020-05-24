@@ -346,3 +346,20 @@ Gets blocks completed leaderboard for both teams and individuals. Will include u
 }
 ```
 
+## `GET api/v1/protected/blocks/reserved`
+
+Gets all blocks that are `assigned_to` the current user that have a status of
+`RESERVED`. Including the optional query parameter `done=true` will _also_
+return all blocks that have a status of `DONE`. Returns a list of `block.fid`.
+
+### Responses
+
+##### `200 OK`
+
+```json
+[
+    STRING,
+    STRING,
+    ...
+]
+```
