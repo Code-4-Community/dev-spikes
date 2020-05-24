@@ -132,8 +132,9 @@ Members of a team have roles specified in the following table:
 
 | Role Name      | teamRole |
 |----------------|----------|
-| General Member | 1        |
-| Team Leader    | 2        |
+| NONE           | 0        |
+| MEMBER         | 1        |
+| LEADER         | 2        |
 
 
 ## `POST /teams`
@@ -253,7 +254,8 @@ Gets a list of teams, names, member count.
     {
       "id": INT,
       "name": STRING,
-      "memberCount": INT
+      "memberCount": INT,
+      "userTeamRole": TEAM_ROLE
     },
     ...
   ],
@@ -278,6 +280,7 @@ Gets the information for this specific team. Including the members with how many
   "goalCompleteDate": DATE,
   "blocksCompleted": INT,
   "blocksReserved": INT,
+  "userTeamRole": TEAM_ROLE,
   "members": [
     {
       "id": INT,
