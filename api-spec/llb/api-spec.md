@@ -634,7 +634,7 @@ If the calling user is not an admin.
 
 The events in a user's cart are stored in Vuex on the frontend in the cart module.
 
-## `POST api/v1/protected/checkout/events`
+## `POST api/v1/protected/checkout/register`
 
 Accepts a list of events to register the user for and creates records in the
 USER_EVENTS table. It can only be called by ADMIN and PF users, and it skips anything
@@ -648,17 +648,16 @@ will be "valid" and null, respectively, for the two new fields.
 
 ### Request Body
 
-```
-const body = {
-  lineItems: cartEvents.map(event => ({
-    id: event.id,
-    name: event.title,
-    description: event.details.description,
-    amount: 5,
-    currency: 'usd',
-    quantity: 1,
-  })),
-};
+```json
+{
+    "lineItems": [
+        {
+            "eventId": INT,
+            "quantity": INT
+        },
+        ...
+    ]
+}
 ```
 
 ### Responses
@@ -682,7 +681,7 @@ This should be improved.
 
 
 
-## `POST api/v1/protected/checkout/session`
+## `POST api/v1/protected/checkout/payment`
 
 This endpoint is similar to the one above. It uses its processor to persist the
 USER_EVENTS records, but for GP users they are persisted initially as "invalid"
@@ -694,23 +693,20 @@ Checkout Session. The ID is returned to the frontend by this API.
 The ID is used to redirect the user to a page in Stripe's application,
 where they can pay. Upon a valid payment completion, Stripe triggers
 our webhook, and when it receives a 200 code Stripe will redirect
-to the "successUrl" parameter.
+to the success URL.
 
 ### Request Body
 
-```
-const body = {
-  lineItems: cartEvents.map(event => ({
-    id: event.id,
-    name: event.title,
-    description: event.details.description,
-    amount: 5,
-    currency: 'usd',
-    quantity: 1,
-  })),
-  successUrl: 'http://localhost:8080/?session_id={CHECKOUT_SESSION_ID}',
-  cancelUrl: 'http://localhost:8080/checkout',
-};
+```json
+{
+    "lineItems": [
+        {
+            "eventId": INT,
+            "quantity": INT
+        },
+        ...
+    ]
+}
 ```
 
 ### Responses
