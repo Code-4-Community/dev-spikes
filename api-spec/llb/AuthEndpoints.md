@@ -332,3 +332,72 @@ Body:
 #### `400 Bad Request`
 > Malformed request.
 
+
+## `GET /user/contact_info`
+
+> Gets all the information associated with this user's account.
+
+### __Response__
+
+#### `200 OK`
+
+```json
+{
+  "mainContact": {
+    "id": STRING,
+    "firstName": STRING,
+    "lastName": STRING,
+    "dateOfBirth": TIMESTAMP,
+    "phoneNumber": STRING,
+    "pronouns": STRING,
+    "allergies": STRING OR NULL,
+    "diagnosis": STRING OR NULL,
+    "medication": STRING OR NULL,
+    "notes": STRING OR NULL,
+  },
+  "additionalContacts": [
+    {
+        "id": STRING,
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": EMAIL,
+        "shouldSendEmails": BOOLEAN,
+        "dateOfBirth": TIMESTAMP,
+        "phoneNumber": STRING,
+        "pronouns": STRING,
+        "allergies": STRING OR NULL,
+        "diagnosis": STRING OR NULL,
+        "medication": STRING OR NULL,
+        "notes": STRING OR NULL,
+    },
+    ...
+  ],
+  "children": [
+    {
+      "id": STRING,
+      "firstName": STRING,
+      "lastName": STRING,
+      "dateOfBirth": TIMESTAMP,
+      "pronouns": STRING,
+      "school": STRING,
+      "schoolYear": STRING,
+      "allergies": STRING OR NULL,
+      "diagnosis": STRING OR NULL,
+      "medications": STRING OR NULL,
+      "notes": STRING OR NULL,
+    }
+    ...
+  ],
+  "location": {
+    "address": STRING,
+    "city": STRING,
+    "state": STRING,
+    "zipCode": STRING
+  },
+  "accountType": PRIVILEGE_LEVEL
+}
+```
+
+`PRIVILEGE_LEVEL` is one of "GP", "PF", or "ADMIN".
+
+
