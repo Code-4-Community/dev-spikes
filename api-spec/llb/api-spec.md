@@ -350,6 +350,8 @@ The calling user does not have the required privilege level
 
 If the calling user is not an admin.
 
+
+
 # Account Creation Flow
 
 ## `POST api/v1/protected/requests`
@@ -368,9 +370,8 @@ Allow multiple outstanding requests?
 ## `GET api/v1/protected/requests`
 
 Getting all active requests.
-Must be called by an admin.
 
-User data returned is currently only the main contact's info but can be expanded based on partener's needs
+Must be called by an admin.
 
 ### Responses
 
@@ -401,6 +402,81 @@ The calling user does not have the required privilege level
 
 If the calling user is not an admin.
 
+## `GET /api/v1/protected/requests/:request_id`
+
+> Gets all the information associated with the account that made this request.
+
+### Params
+
+- `request_id` is the id number of this request.
+
+### __Response__
+
+#### `200 OK`
+
+```json
+{
+  "mainContact": {
+    "id": STRING,
+    "firstName": STRING,
+    "lastName": STRING,
+    "dateOfBirth": TIMESTAMP,
+    "phoneNumber": STRING,
+    "pronouns": STRING,
+    "allergies": STRING OR NULL,
+    "diagnosis": STRING OR NULL,
+    "medication": STRING OR NULL,
+    "notes": STRING OR NULL,
+  },
+  "additionalContacts": [
+    {
+        "id": STRING,
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": EMAIL,
+        "shouldSendEmails": BOOLEAN,
+        "dateOfBirth": TIMESTAMP,
+        "phoneNumber": STRING,
+        "pronouns": STRING,
+        "allergies": STRING OR NULL,
+        "diagnosis": STRING OR NULL,
+        "medication": STRING OR NULL,
+        "notes": STRING OR NULL,
+    },
+    ...
+  ],
+  "children": [
+    {
+      "id": STRING,
+      "firstName": STRING,
+      "lastName": STRING,
+      "dateOfBirth": TIMESTAMP,
+      "pronouns": STRING,
+      "school": STRING,
+      "schoolYear": STRING,
+      "allergies": STRING OR NULL,
+      "diagnosis": STRING OR NULL,
+      "medications": STRING OR NULL,
+      "notes": STRING OR NULL,
+    }
+    ...
+  ],
+  "location": {
+    "address": STRING,
+    "city": STRING,
+    "state": STRING,
+    "zipCode": STRING
+  },
+  "accountType": PRIVILEGE_LEVEL
+}
+```
+
+`PRIVILEGE_LEVEL` is one of "GP", "PF", or "ADMIN". 
+
+> Note that this is included so that this response matches the response for getting all of a user's information even though it will always be GP in this case.
+
+
+
 ## `POST api/v1/protected/requests/:request_id/approve`
 ## `POST api/v1/protected/requests/:request_id/reject`
 
@@ -425,11 +501,11 @@ The calling user does not have the required privilege level
 If the calling user is not an admin.
 
 
-## `GET api/v1/protected/requests/:request_id`
+## `GET api/v1/protected/requests/:request_id/status`
 
 Getting the status of a particular request, tbd, approved, or rejected. The user making this call must be either an admin or be the user that initiated this request.
 
-This route may be changed to not require a request_id and instead just get reqest statues based on the user's credentials.
+This route may be changed to not require a request_id and instead just get request statues based on the user's credentials.
 
 ### Responses
 
