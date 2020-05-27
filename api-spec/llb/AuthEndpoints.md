@@ -262,6 +262,34 @@ passwords should be strings with length >= 8 characters.
 > The currentPassword does not match the calling user's current password.
 
 
+## `POST /user/change_email`
+
+Allows a user to change the email address for the main contact. This updates the email the user logs in with as well as the email for the main contact that will recieve all communication.
+
+### __Request__
+
+```json
+{
+  "newEmail": STRING,
+  "password": STRING
+}
+```
+
+### __Responses__
+
+##### `200 OK`
+
+> The email change was successful.
+
+##### `400 BAD REQUEST`
+
+> If the request was malformed.
+
+##### `401 Unauthorized`
+
+> The currentPassword does not match the calling user's current password.
+
+
 
 ## `POST user/contact_info`
 
