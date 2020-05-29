@@ -501,27 +501,25 @@ The calling user does not have the required privilege level
 If the calling user is not an admin.
 
 
-## `GET api/v1/protected/requests/:request_id/status`
+## `GET api/v1/protected/requests/status`
 
-Getting the status of a particular request, tbd, approved, or rejected. The user making this call must be either an admin or be the user that initiated this request.
-
-This route may be changed to not require a request_id and instead just get request statues based on the user's credentials.
+Getting the statuses of all requests the calling user has made to become a PF.
 
 ### Responses
 
 #### `200 OK`
 ```json
 {
-  "status": "APPROVED" | "REJECTED" | "PENDING"
+  "requests": [
+   {
+    "id": INT,
+    "status": "APPROVED" | "REJECTED" | "PENDING",
+    "created": TIMESTAMP
+   },
+   ...
+  ]
 }
 ```
-
-#### `401 Unauthorized`
-```json
-The resource <request_id> is not owned by the calling user and is thus not accessible
-```
-
-If the user is not an admin and is requesting the status of a request they did not make.
 
 
 
