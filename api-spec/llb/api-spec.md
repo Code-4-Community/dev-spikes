@@ -232,7 +232,6 @@ Create a new event. This route must be called by an admin.
   "spotsAvailable": INT,
   "capacity": INT,
   "thumbnail": URL,
-  "ticketCount": INT,
   "details": {
     "description": STRING,
     "location": STRING,
@@ -286,7 +285,6 @@ Update an existing event. This route must be called by an admin. All fields are 
   "title": STRING,
   "spotsAvailable": INT,
   "thumbnail": URL,
-  "ticketCount": INT,
   "details": {
     "description": STRING,
     "location": STRING,
