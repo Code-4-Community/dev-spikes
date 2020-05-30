@@ -711,35 +711,28 @@ If the calling user is not an admin.
 
 
 
-# Event Checkout and Registration  
+# Event Checkout and Registration
 
-The events in a user's cart are stored in Vuex on the frontend in the cart module. 
+The events in a user's cart are stored in Vuex on the frontend in the cart module.
 
-## `POST api/v1/protected/checkout/events`
+## `POST api/v1/protected/checkout/register`
 
-Accepts a list of events to register the user for and creates records in the 
-USER_EVENTS table. It can only be called by ADMIN and PF users, and it skips anything 
-to do with Stripe and payments. 
-
-TODO: Add a field "isValid" or "status" to USER_EVENTS to indicate if it is a valid,
-complete registration or not. Add a field "CheckoutSessionID" so that our Stripe
-webhook `api/v1/webhooks/stripe` can mark USER_EVENTS records as valid upon receipt of 
-payment confirmation. More details about that logic below, for this endpoint, the values
-will be "valid" and null, respectively, for the two new fields. 
+Accepts a list of events to register the user for and creates records in the
+USER_EVENTS table. It can only be called by ADMIN and PF users, and it skips anything
+to do with Stripe and payments.
 
 ### Request Body
 
-```
-const body = {
-  lineItems: cartEvents.map(event => ({
-    id: event.id,
-    name: event.title,
-    description: event.details.description,
-    amount: 5,
-    currency: 'usd',
-    quantity: 1,
-  })),
-};
+```json
+{
+    "lineItems": [
+        {
+            "eventId": INT,
+            "quantity": INT
+        },
+        ...
+    ]
+}
 ```
 
 ### Responses
@@ -752,53 +745,50 @@ The purchase was successful.
 
 #### `401 UNAUTHORIZED`
 
-GP users cannot access this route. Only >= PF can. 
+GP users cannot access this route. Only >= PF can.
 
 #### `500 Internal Server Error`
 
-Currently we return a 500 error when the user registers for an event they are already registered for. 
-This should be improved. 
+Currently we return a 500 error when the user registers for an event they are already registered for.
+This should be improved.
 
 
 
 
 
-## `POST api/v1/protected/checkout/session`
+## `POST api/v1/protected/checkout/payment`
 
-This endpoint is similar to the one above. It uses its processor to persist the 
-USER_EVENTS records, but for GP users they are persisted initially as "invalid" 
-with the CheckoutSessionID of the Stripe endpoint we create. 
+This endpoint is similar to the one above. It uses its processor to persist the
+USER_EVENTS records, but for GP users they are persisted initially as "invalid"
+with the CheckoutSessionID of the Stripe endpoint we create.
 
-How does Stripe work? 
+How does Stripe work?
 When a GP clicks register, we call this route, which will create a Stripe
-Checkout Session. The ID is returned to the frontend by this API. 
-The ID is used to redirect the user to a page in Stripe's application, 
-where they can pay. Upon a valid payment completion, Stripe triggers 
+Checkout Session. The ID is returned to the frontend by this API.
+The ID is used to redirect the user to a page in Stripe's application,
+where they can pay. Upon a valid payment completion, Stripe triggers
 our webhook, and when it receives a 200 code Stripe will redirect
-to the "successUrl" parameter.
+to the success URL.
 
 ### Request Body
 
-```
-const body = {
-  lineItems: cartEvents.map(event => ({
-    id: event.id,
-    name: event.title,
-    description: event.details.description,
-    amount: 5,
-    currency: 'usd',
-    quantity: 1,
-  })),
-  successUrl: 'http://localhost:8080/?session_id={CHECKOUT_SESSION_ID}',
-  cancelUrl: 'http://localhost:8080/checkout',
-};
+```json
+{
+    "lineItems": [
+        {
+            "eventId": INT,
+            "quantity": INT
+        },
+        ...
+    ]
+}
 ```
 
 ### Responses
 
 #### `200 OK`
 
-Checkout Session created properly, response contains the ID. 
+Checkout Session created properly, response contains the ID.
 
 #### `400 BAD REQUEST`
 
@@ -806,7 +796,7 @@ Checkout Session created properly, response contains the ID.
 
 #### `401 UNAUTHORIZED`
 
-Only GP users can access this endpoint. 
+Only GP users can access this endpoint.
 
 
 
@@ -816,31 +806,31 @@ Only GP users can access this endpoint.
 
 A webhook for Stripe to send events to.
 
-See Step 4 of these docs: 
+See Step 4 of these docs:
 https://stripe.com/docs/payments/checkout/one-time
 
-Stripe Webhook Documentation: 
+Stripe Webhook Documentation:
 https://stripe.com/docs/webhooks
 
 ### Request Body
 
-The body we care about is a Session object as 
+The body we care about is a Session object as
 defined by the Stripe Java library. We use only
 the Checkout Session ID, marking USER_EVENTS
 records that are invalid with the same Checkout
-Session ID as valid. 
+Session ID as valid.
 
 ### Responses
 
 #### `200 OK`
 
-Generally, a lot of problems are caused when we don't return a 200 code. 
-It's the equivalent of Stripe saying "OK, we authorized this payment!" 
-and us saying "Wait, something's wrong, don't charge them". 
-Idk what the actual implementation details are, but generally, 
-Stripe will send more types of events to our hook than 
-just the checkout.session.completed event that we care about. 
-For other events, we just return 200. 
+Generally, a lot of problems are caused when we don't return a 200 code.
+It's the equivalent of Stripe saying "OK, we authorized this payment!"
+and us saying "Wait, something's wrong, don't charge them".
+Idk what the actual implementation details are, but generally,
+Stripe will send more types of events to our hook than
+just the checkout.session.completed event that we care about.
+For other events, we just return 200.
 
 #### `400 BAD REQUEST`
 
@@ -848,4 +838,4 @@ This shouldn't happen...
 
 #### `401 UNAUTHORIZED`
 
-We're using webhook signatures to authorize this endpoint. 
+We're using webhook signatures to authorize this endpoint.
