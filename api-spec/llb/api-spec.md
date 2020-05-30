@@ -640,12 +640,6 @@ Accepts a list of events to register the user for and creates records in the
 USER_EVENTS table. It can only be called by ADMIN and PF users, and it skips anything
 to do with Stripe and payments.
 
-TODO: Add a field "isValid" or "status" to USER_EVENTS to indicate if it is a valid,
-complete registration or not. Add a field "CheckoutSessionID" so that our Stripe
-webhook `api/v1/webhooks/stripe` can mark USER_EVENTS records as valid upon receipt of
-payment confirmation. More details about that logic below, for this endpoint, the values
-will be "valid" and null, respectively, for the two new fields.
-
 ### Request Body
 
 ```json
