@@ -32,8 +32,8 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`POST api/v1/protected/announcements/:event_id`](#-post-api-v1-protected-announcements--event-id-)
   * [`DELETE /api/v1/protected/announcements/:announcement_id`](#-delete--api-v1-protected-announcements--announcement-id-)
 - [Event Checkout and Registration](#checkout-registration)
-  * [`POST api/v1/protected/checkout/session`](#-post-api-v1-protected-checkout-session)
-  * [`POST api/v1/protected/checkout/event`](#-post-api-v1-protected-checkout-event)
+  * [`POST api/v1/protected/checkout/register`](#-post-api-v1-protected-checkout-register)
+  * [`PUT api/v1/protected/checkout/register/:event_id`](#-put-api-v1-protected-checkout-register--event-id-)
   * [`POST api/v1/webhooks/stripe`](#-post-api-v1-webhooks-stripe)
 
 
@@ -759,7 +759,7 @@ Checkout session created, response contains the ID.
 
 ## `PUT api/v1/protected/checkout/register/:event_id`
 
-Changes the number of tickets a user has for the specified event. If the user is a GP and the new number of tickets is greater than the number of tickets the user previously had, a Stripe checkout session will be created. The new number of tickets must be within the event's capacity and must be greater than 0. If a GP user decreases the number of tickets, the price of the removed tickets will be added to their account balance.
+Changes the number of tickets a user has for the specified event. If the user is a GP and the new number of tickets is greater than the number of tickets the user previously had, a Stripe checkout session will be created. The new number of tickets must be within the event's capacity and must be greater than or equal to 0. If a GP user decreases the number of tickets, the price of the removed tickets will be added to their account balance.
 
 ### Request Body
 
@@ -778,18 +778,6 @@ The change in tickets was successful.
 #### `202 ACCEPTED`
 
 Checkout session created, response contains the ID.
-
-
-
-## `DELETE api/v1/protected/checkout/register/:event_id`
-
-Deletes a user's registration for the specified event. If the user is a GP, the price of all the tickets will be added to the user's account balance.
-
-### Responses
-
-#### `200 OK`
-
-The removal of the registration was successful.
 
 
 
