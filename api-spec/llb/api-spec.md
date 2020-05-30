@@ -757,6 +757,41 @@ Checkout session created, response contains the ID.
 
 
 
+## `PUT api/v1/protected/checkout/register/:event_id`
+
+Changes the number of tickets a user has for the specified event. If the user is a GP and the new number of tickets is greater than the number of tickets the user previously had, a Stripe checkout session will be created. The new number of tickets must be within the event's capacity and must be greater than 0. If a GP user decreases the number of tickets, the price of the removed tickets will be added to their account balance.
+
+### Request Body
+
+```json
+{
+    "quantity": INT
+}
+```
+
+### Responses
+
+#### `200 OK`
+
+The change in tickets was successful.
+
+#### `202 ACCEPTED`
+
+Checkout session created, response contains the ID.
+
+
+
+## `DELETE api/v1/protected/checkout/register/:event_id`
+
+Deletes a user's registration for the specified event. If the user is a GP, the price of all the tickets will be added to the user's account balance.
+
+### Responses
+
+#### `200 OK`
+
+The removal of the registration was successful.
+
+
 
 ## `POST api/v1/webhooks/stripe`
 
