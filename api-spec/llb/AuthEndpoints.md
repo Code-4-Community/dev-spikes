@@ -371,6 +371,12 @@ Body:
 
 ```json
 {
+  "location": {
+    "address": STRING,
+    "city": STRING,
+    "state": STRING,
+    "zipCode": STRING
+  },
   "mainContact": {
     "id": STRING,
     "firstName": STRING,
@@ -415,17 +421,81 @@ Body:
       "notes": STRING OR NULL,
     }
     ...
-  ],
+  ]
+}
+```
+
+
+## `PUT /user/contact_info`
+
+> Updates the user's contact, children, and account infromation.
+
+### __Request__
+
+```json
+{
   "location": {
     "address": STRING,
     "city": STRING,
     "state": STRING,
     "zipCode": STRING
   },
-  "accountType": PRIVILEGE_LEVEL
+  "mainContact": {
+    "firstName": STRING,
+    "lastName": STRING,
+    "dateOfBirth": TIMESTAMP,
+    "phoneNumber": STRING,
+    "pronouns": STRING,
+    "allergies": STRING OR NULL,
+    "diagnosis": STRING OR NULL,
+    "medication": STRING OR NULL,
+    "notes": STRING OR NULL,
+  },
+  "additionalContacts": [
+    {
+        "id": STRING OR NULL,
+        "firstName": STRING,
+        "lastName": STRING,
+        "email": EMAIL,
+        "shouldSendEmails": BOOLEAN,
+        "dateOfBirth": TIMESTAMP,
+        "phoneNumber": STRING,
+        "pronouns": STRING,
+        "allergies": STRING OR NULL,
+        "diagnosis": STRING OR NULL,
+        "medication": STRING OR NULL,
+        "notes": STRING OR NULL,
+    },
+    ...
+  ],
+  "children": [
+    {
+      "id": STRING OR NULL,
+      "firstName": STRING,
+      "lastName": STRING,
+      "dateOfBirth": TIMESTAMP,
+      "pronouns": STRING,
+      "school": STRING,
+      "schoolYear": STRING,
+      "allergies": STRING OR NULL,
+      "diagnosis": STRING OR NULL,
+      "medications": STRING OR NULL,
+      "notes": STRING OR NULL,
+    }
+    ...
+  ]
 }
 ```
 
-`PRIVILEGE_LEVEL` is one of "GP", "PF", or "ADMIN".
+Any contacts or children that exist in the database and not in the request body will be deleted. Any contact or child with a null id will be treated as a brand new record. Any contact or child with a NON-null id will be treated as an update and will return a 400 if the row with that id is not owned by the calling user.
 
+### __Responses__
+
+#### `200 OK`
+
+Everything went ok.
+
+#### `400 BAD REQUEST`
+
+Either the JSON request body was malformed or a child or contact had a non-null id that is associated with a row in the db that is NOT associated with the user that called this route.
 
