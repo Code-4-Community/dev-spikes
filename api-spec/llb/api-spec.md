@@ -86,7 +86,7 @@ The events were sent successfully.
       "spotsAvailable": INT,
       "capacity": INT,
       "thumbnail": URL,
-      "signedUp": BOOLEAN,
+      "ticketCount": INT,
       "details": {
         "description": STRING,
         "location": STRING,
@@ -124,7 +124,7 @@ Equivelent to above routes:
       "spotsAvailable": INT,
       "capacity": INT,
       "thumbnail": URL,
-      "signedUp": BOOLEAN,
+      "ticketCount": INT,
       "details": {
         "description": STRING,
         "location": STRING,
@@ -164,7 +164,7 @@ The event was retrieved successfully.
   "spotsAvailable": INT,
   "capacity": INT,
   "thumbnail": URL,
-  "signedUp": BOOLEAN,
+  "ticketCount": INT,
   "details": {
     "description": STRING,
     "location": STRING,
@@ -232,7 +232,6 @@ Create a new event. This route must be called by an admin.
   "spotsAvailable": INT,
   "capacity": INT,
   "thumbnail": URL,
-  "signedUp": BOOLEAN
   "details": {
     "description": STRING,
     "location": STRING,
@@ -257,7 +256,7 @@ The event was created successfully. Will return the event that was just created 
   "spotsAvailable": INT,
   "capacity": INT,
   "thumbnail": URL,
-  "signedUp": BOOLEAN,
+  "ticketCount": INT,
   "details": {
     "description": STRING,
     "location": STRING,
@@ -286,7 +285,6 @@ Update an existing event. This route must be called by an admin. All fields are 
   "title": STRING,
   "spotsAvailable": INT,
   "thumbnail": URL,
-  "signedUp": BOOLEAN,
   "details": {
     "description": STRING,
     "location": STRING,
@@ -308,7 +306,7 @@ The event was updated successfully. Will return the event that was just created 
   "title": STRING,
   "spotsAvailable": INT,
   "thumbnail": URL,
-  "signedUp": BOOLEAN,
+  "ticketCount": INT,
   "details": {
     "description": STRING,
     "location": STRING,
