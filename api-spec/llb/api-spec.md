@@ -471,7 +471,7 @@ If the calling user is not an admin.
 }
 ```
 
-`PRIVILEGE_LEVEL` is one of "GP", "PF", or "ADMIN". 
+`PRIVILEGE_LEVEL` is one of "GP", "PF", or "ADMIN".
 
 > Note that this is included so that this response matches the response for getting all of a user's information even though it will always be GP in this case.
 
@@ -718,49 +718,8 @@ The events in a user's cart are stored in Vuex on the frontend in the cart modul
 ## `POST api/v1/protected/checkout/register`
 
 Accepts a list of events to register the user for and creates records in the
-USER_EVENTS table. It can only be called by ADMIN and PF users, and it skips anything
-to do with Stripe and payments.
-
-### Request Body
-
-```json
-{
-    "lineItems": [
-        {
-            "eventId": INT,
-            "quantity": INT
-        },
-        ...
-    ]
-}
-```
-
-### Responses
-
-#### `200 OK`
-
-The purchase was successful.
-
-#### `400 BAD REQUEST`
-
-#### `401 UNAUTHORIZED`
-
-GP users cannot access this route. Only >= PF can.
-
-#### `500 Internal Server Error`
-
-Currently we return a 500 error when the user registers for an event they are already registered for.
-This should be improved.
-
-
-
-
-
-## `POST api/v1/protected/checkout/payment`
-
-This endpoint is similar to the one above. It uses its processor to persist the
-USER_EVENTS records, but for GP users they are persisted initially as "invalid"
-with the CheckoutSessionID of the Stripe endpoint we create.
+USER_EVENTS table. If called by an ADMIN or a PF user, it skips anything
+to do with Stripe and payments. If called by a GP, the EVENT_REGISTRATIONS records are initially persisted as "invalid" with the CheckoutSessionID of the Stripe endpoint we create. When the checkout is successfully completed, the EVENT_REGISTRATIONS records have their statuses updated to "active".
 
 How does Stripe work?
 When a GP clicks register, we call this route, which will create a Stripe
@@ -788,16 +747,13 @@ to the success URL.
 
 #### `200 OK`
 
-Checkout Session created properly, response contains the ID.
+The purchase was successful.
+
+#### `202 ACCEPTED`
+
+Checkout session created, response contains the ID.
 
 #### `400 BAD REQUEST`
-
-
-
-#### `401 UNAUTHORIZED`
-
-Only GP users can access this endpoint.
-
 
 
 
