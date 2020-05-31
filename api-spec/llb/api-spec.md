@@ -324,6 +324,10 @@ The calling user does not have the required privilege level
 
 If the calling user is not an admin.
 
+#### `409 Conflict`
+
+This response occurs when `spotsAvailable` is less than the number of users currently registered for the event.
+
 ## `DELETE api/v1/protected/events/:event_id`
 
 Delete an existing event. This route must be called by an admin.
