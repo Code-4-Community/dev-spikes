@@ -717,8 +717,7 @@ The events in a user's cart are stored in Vuex on the frontend in the cart modul
 
 ## `POST api/v1/protected/checkout/register`
 
-Accepts a list of events to register the user for and creates records in the
-USER_EVENTS table. If called by an ADMIN or a PF user, it skips anything
+Accepts a non-empty list of events to register the user for and creates records in the USER_EVENTS table. If called by an ADMIN or a PF user, it skips anything
 to do with Stripe and payments. If called by a GP, the EVENT_REGISTRATIONS records are initially persisted as "invalid" with the CheckoutSessionID of the Stripe endpoint we create. When the checkout is successfully completed, the EVENT_REGISTRATIONS records have their statuses updated to "active".
 
 How does Stripe work?
@@ -755,6 +754,20 @@ Checkout session created, response contains the ID.
 
 #### `400 BAD REQUEST`
 
+The request syntax is malformed, e.g. the given list of events is empty.
+
+#### `401 UNAUTHORIZED`
+
+The user is not eligible to sign up for one or more of the requested events.
+
+#### `404 NOT FOUND`
+
+One or more of the event IDs is invalid.
+
+#### `409 CONFLICT`
+
+The user has requested a number of tickets that exceeds the capacity for one or more of the requested events.
+
 
 
 ## `PUT api/v1/protected/checkout/register/:event_id`
@@ -778,6 +791,18 @@ The change in tickets was successful.
 #### `202 ACCEPTED`
 
 Checkout session created, response contains the ID.
+
+#### `401 UNAUTHORIZED`
+
+The user is not eligible to sign up for the event.
+
+#### `404 NOT FOUND`
+
+The event ID is invalid.
+
+#### `409 CONFLICT`
+
+The user has requested a number of tickets that exceeds the capacity for the event.
 
 
 
