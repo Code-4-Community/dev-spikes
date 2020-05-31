@@ -32,8 +32,8 @@ Any response of `401 UNAUTHORIZED` with the following body indicates that the us
   * [`POST api/v1/protected/announcements/:event_id`](#-post-api-v1-protected-announcements--event-id-)
   * [`DELETE /api/v1/protected/announcements/:announcement_id`](#-delete--api-v1-protected-announcements--announcement-id-)
 - [Event Checkout and Registration](#checkout-registration)
-  * [`POST api/v1/protected/checkout/session`](#-post-api-v1-protected-checkout-session)
-  * [`POST api/v1/protected/checkout/event`](#-post-api-v1-protected-checkout-event)
+  * [`POST api/v1/protected/checkout/register`](#-post-api-v1-protected-checkout-register)
+  * [`PUT api/v1/protected/checkout/register/:event_id`](#-put-api-v1-protected-checkout-register--event-id-)
   * [`POST api/v1/webhooks/stripe`](#-post-api-v1-webhooks-stripe)
 
 
@@ -715,8 +715,7 @@ The events in a user's cart are stored in Vuex on the frontend in the cart modul
 
 ## `POST api/v1/protected/checkout/register`
 
-Accepts a list of events to register the user for and creates records in the
-USER_EVENTS table. If called by an ADMIN or a PF user, it skips anything
+Accepts a non-empty list of events to register the user for and creates records in the USER_EVENTS table. If called by an ADMIN or a PF user, it skips anything
 to do with Stripe and payments. If called by a GP, the EVENT_REGISTRATIONS records are initially persisted as "invalid" with the CheckoutSessionID of the Stripe endpoint we create. When the checkout is successfully completed, the EVENT_REGISTRATIONS records have their statuses updated to "active".
 
 How does Stripe work?
@@ -753,6 +752,55 @@ Checkout session created, response contains the ID.
 
 #### `400 BAD REQUEST`
 
+The request syntax is malformed, e.g. the given list of events is empty.
+
+#### `401 UNAUTHORIZED`
+
+The user is not eligible to sign up for one or more of the requested events.
+
+#### `404 NOT FOUND`
+
+One or more of the event IDs is invalid.
+
+#### `409 CONFLICT`
+
+The user has requested a number of tickets that exceeds the capacity for one or more of the requested events.
+
+
+
+## `PUT api/v1/protected/checkout/register/:event_id`
+
+Changes the number of tickets a user has for the specified event. If the user is a GP and the new number of tickets is greater than the number of tickets the user previously had, a Stripe checkout session will be created. The new number of tickets must be within the event's capacity and must be greater than or equal to 0. If a GP user decreases the number of tickets, the price of the removed tickets will be added to their account balance.
+
+### Request Body
+
+```json
+{
+    "quantity": INT
+}
+```
+
+### Responses
+
+#### `200 OK`
+
+The change in tickets was successful.
+
+#### `202 ACCEPTED`
+
+Checkout session created, response contains the ID.
+
+#### `401 UNAUTHORIZED`
+
+The user is not eligible to sign up for the event.
+
+#### `404 NOT FOUND`
+
+The event ID is invalid.
+
+#### `409 CONFLICT`
+
+The user has requested a number of tickets that exceeds the capacity for the event.
 
 
 
