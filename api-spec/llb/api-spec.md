@@ -48,11 +48,61 @@ For General Public: Any event happening in the next 5 days are eligible.
 For Participating Families: Any event happening in the future.
 For Admins: Any  event happening in the future.
 
+### Query Params
+
+##### start: DATE-STRING
+
+The beginning date of when to get events from. All returned events will happen ON or after
+the given date string that is given in mm/dd/yyyy format, ie: 01/19/2020
+
+##### end: DATE-STRING
+
+The latest date of when to get events from. All returned events will happen ON or before the
+given date string that is given in mm/dd/yyyy format, ie: 12/03/2009
+
+##### count: INTEGER
+
+The maximum number of events to return. The route will return AT MOST count number of events.
+
+### Responses
+
+#### `200 OK`
+
+The events were sent successfully.
+
+```json
+{
+  "events": [
+    {
+      "id": ID,
+      "title": STRING,
+      "spotsAvailable": INT,
+      "capacity": INT,
+      "thumbnail": URL,
+      "ticketCount": INT,
+      "canRegister": BOOLEAN,
+      "details": {
+        "description": STRING,
+        "location": STRING,
+        "start": TIMESTAMP,
+        "end": TIMESTAMP
+      }
+    },
+    ...
+  ],
+  "totalCount": INTEGER
+}
+```
+
+ticketCount is the number of tickets the calling user has reserved for this event. It will be 0 if the user is not registered for the event.
+
+canRegister is dependent on the privilege level of the calling user. GPs are only able to register for events that are happening in the next 5 days.
+
+
+
 ## `GET api/v1/protected/events/signed_up`
 
 Get all of the events happening in the future that the given user is signed up for.
-
-##### qualified and signed_up have the same query parameters and responses
 
 
 ### Query Params
@@ -99,6 +149,8 @@ The events were sent successfully.
   "totalCount": INTEGER
 }
 ```
+
+ticketCount is the number of tickets the calling user has reserved for this event. It will be 0 if the user is not registered for the event.
 
 
 ## `GET api/v1/protected/events?ids=1,2,3,...`
@@ -165,6 +217,7 @@ The event was retrieved successfully.
   "capacity": INT,
   "thumbnail": URL,
   "ticketCount": INT,
+  "canRegister": BOOLEAN,
   "details": {
     "description": STRING,
     "location": STRING,
@@ -173,6 +226,13 @@ The event was retrieved successfully.
   }
 }
 ```
+
+ticketCount is the number of tickets the calling user has reserved for this event. It will be 0 if the user is not registered for the event.
+
+canRegister is dependent on the privilege level of the calling user. GPs are only able to register for events that are happening in the next 5 days.
+
+canRegister does not check if the calling user is already signed up for this event.
+
 
 ## `GET api/v1/protected/events/:event_id/registrations`
 
