@@ -135,7 +135,6 @@ Members of a team have roles specified in the following table:
 | NONE           | 0        |
 | MEMBER         | 1        |
 | LEADER         | 2        |
-| PENDING        | 3        |
 
 
 ## `POST /teams`
@@ -230,8 +229,8 @@ Get the info for anyone that has requested to join this team in a list.
     {
       "id": INT,
       "username": STRING,
-      "blocksReserved": INT,
-      "blocksCompleted": INT,
+      "firstName": STRING,
+      "lastName": STRING,
     },
     ...
   ]
