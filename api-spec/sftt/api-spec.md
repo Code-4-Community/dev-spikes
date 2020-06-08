@@ -237,6 +237,32 @@ Kicks a member off this team. Leader only. That member is then allowed to join o
 
 No request body.
 
+## `PUT /teams/:team_id/leader`
+
+Update the team leader. Can only be called by the current leader of the given team.
+
+### Request
+
+```json
+{
+    "userId": INT
+}
+```
+
+### Responses
+
+##### `200 OK`
+
+Success.
+
+##### `401 Unauthorized`
+
+If the requesting user is not the team leader.
+
+##### `404 Not Found`
+
+If the given user ID does not exist.
+
 
 # Team and Leaderboard Data
 
@@ -366,7 +392,7 @@ return all blocks that have a status of `DONE`. Returns a list of `block.fid`.
 
 ## `GET api/v1/protected/blocks/reserved/admin`
 
-Gets all blocks that have a status of `RESERVED`, in descending order of completion date. Can only be called by admins.
+Gets all blocks that have a status of `RESERVED`, in descending order of reservation date. Can only be called by admins.
 
 ### Responses
 
@@ -379,6 +405,27 @@ Gets all blocks that have a status of `RESERVED`, in descending order of complet
             "fid": STRING,
             "userId": INT,
             "reserveDate": TIMESTAMP
+        }
+    ],
+    ...
+}
+```
+
+## `GET api/v1/protected/blocks/done`
+
+Gets all blocks that have a status of `DONE`, in descending order of completion date. Can only be called by admins.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+    "blocks": [
+        {
+            "fid": STRING,
+            "userId": INT,
+            "completionDate": TIMESTAMP
         }
     ],
     ...
