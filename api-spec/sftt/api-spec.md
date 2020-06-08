@@ -363,3 +363,24 @@ return all blocks that have a status of `DONE`. Returns a list of `block.fid`.
     ...
 ]
 ```
+
+## `GET api/v1/protected/blocks/reserved/admin`
+
+Gets all blocks that have a status of `RESERVED`, in descending order of completion date. Can only be called by admins.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+    "blocks": [
+        {
+            "id": INT,
+            "username": STRING,
+            "reserve_date": TIMESTAMP
+        }
+    ],
+    ...
+}
+```
