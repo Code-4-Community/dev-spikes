@@ -237,7 +237,7 @@ Kicks a member off this team. Leader only. That member is then allowed to join o
 
 No request body.
 
-## `PUT /teams/:team_id/leader`
+## `POST /teams/:team_id/transfer_ownership`
 
 Update the team leader. Can only be called by the current leader of the given team.
 
@@ -245,7 +245,7 @@ Update the team leader. Can only be called by the current leader of the given te
 
 ```json
 {
-    "userId": INT
+    "newLeaderId": INT
 }
 ```
 
@@ -255,13 +255,13 @@ Update the team leader. Can only be called by the current leader of the given te
 
 Success.
 
+##### `400 Bad Request`
+
+If the given user ID does not exist, or if the given user is not on the team.
+
 ##### `401 Unauthorized`
 
 If the requesting user is not the team leader.
-
-##### `404 Not Found`
-
-If the given user ID does not exist.
 
 
 # Team and Leaderboard Data
