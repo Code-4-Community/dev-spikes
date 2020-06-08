@@ -378,7 +378,7 @@ Gets all blocks that have a status of `RESERVED`, in descending order of complet
         {
             "id": INT,
             "username": STRING,
-            "reserve_date": TIMESTAMP
+            "reserveDate": TIMESTAMP
         }
     ],
     ...
