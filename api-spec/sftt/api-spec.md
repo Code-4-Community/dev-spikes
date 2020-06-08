@@ -135,6 +135,7 @@ Members of a team have roles specified in the following table:
 | NONE           | 0        |
 | MEMBER         | 1        |
 | LEADER         | 2        |
+| PENDING        | 3        |
 
 
 ## `POST /teams`
@@ -227,7 +228,7 @@ Get the info for anyone that has requested to join this team in a list.
 {
   "applicants": [
     {
-      "id": INT,
+      "userId": INT,
       "username": STRING,
       "firstName": STRING,
       "lastName": STRING,
@@ -237,11 +238,11 @@ Get the info for anyone that has requested to join this team in a list.
 }
 ```
 
-## `POST /teams/:team_id/applicants/:request_id/approve`
+## `POST /teams/:team_id/applicants/:user_id/approve`
 
 Team Leader only.
 
-Approve this applicant's request to join the team. The request_id will be the same as the id returned in the GET applicants API call.
+Approve this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
 
 ### Request
 
@@ -259,11 +260,11 @@ If the team or request specified in the id is invalid OR the user that had creat
 
 
 
-## `POST /teams/:team_id/applicants/:request_id/reject`
+## `POST /teams/:team_id/applicants/:user_id/reject`
 
 Team Leader only.
 
-Approve this applicant's request to join the team. The request_id will be the same as the id returned in the GET applicants API call.
+Approve this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
 
 ### Request
 
