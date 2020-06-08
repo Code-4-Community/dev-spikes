@@ -404,7 +404,7 @@ Gets all blocks that have a status of `RESERVED`, in descending order of reserva
         {
             "fid": STRING,
             "username": STRING,
-            "reserveDate": TIMESTAMP
+            "date": TIMESTAMP
         }
     ],
     ...
@@ -425,7 +425,7 @@ Gets all blocks that have a status of `DONE`, in descending order of completion 
         {
             "fid": STRING,
             "username": STRING,
-            "completionDate": TIMESTAMP
+            "date": TIMESTAMP
         }
     ],
     ...
