@@ -237,6 +237,32 @@ Kicks a member off this team. Leader only. That member is then allowed to join o
 
 No request body.
 
+## `POST /teams/:team_id/transfer_ownership`
+
+Update the team leader. Can only be called by the current leader of the given team.
+
+### Request
+
+```json
+{
+    "newLeaderId": INT
+}
+```
+
+### Responses
+
+##### `200 OK`
+
+Success.
+
+##### `400 Bad Request`
+
+If the given user ID does not exist, or if the given user is not on the team.
+
+##### `401 Unauthorized`
+
+If the requesting user is not the team leader.
+
 
 # Team and Leaderboard Data
 
@@ -362,4 +388,46 @@ return all blocks that have a status of `DONE`. Returns a list of `block.fid`.
     STRING,
     ...
 ]
+```
+
+## `GET api/v1/protected/blocks/reserved/admin`
+
+Gets all blocks that have a status of `RESERVED`, in descending order of reservation date. Can only be called by admins.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+    "blocks": [
+        {
+            "fid": STRING,
+            "username": STRING,
+            "date": TIMESTAMP
+        }
+    ],
+    ...
+}
+```
+
+## `GET api/v1/protected/blocks/done`
+
+Gets all blocks that have a status of `DONE`, in descending order of completion date. Can only be called by admins.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+    "blocks": [
+        {
+            "fid": STRING,
+            "username": STRING,
+            "date": TIMESTAMP
+        }
+    ],
+    ...
+}
 ```
