@@ -404,14 +404,14 @@ Gets all blocks that have a status of `RESERVED`, in descending order of reserva
         {
             "fid": STRING,
             "username": STRING,
-            "date": TIMESTAMP
+            "dateUpdated": TIMESTAMP
         }
     ],
     ...
 }
 ```
 
-## `GET api/v1/protected/blocks/done`
+## `GET api/v1/protected/blocks/done/admin`
 
 Gets all blocks that have a status of `DONE`, in descending order of completion date. Can only be called by admins.
 
@@ -425,7 +425,7 @@ Gets all blocks that have a status of `DONE`, in descending order of completion 
         {
             "fid": STRING,
             "username": STRING,
-            "date": TIMESTAMP
+            "dateUpdated": TIMESTAMP
         }
     ],
     ...
