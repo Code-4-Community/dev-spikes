@@ -325,6 +325,26 @@ The `members` list is sorted in descending order of number of blocks completed.
 `teamRole` is an indicator of the member's role on the team. Currently there are only two roles: general member and team leader.
 
 
+## `GET /api/v1/protected/teams/export`
+
+Export Teams and User information. This is an admin-only route.
+Returns a `text/cvs` response that includes 
+every team name, the goal and goal completion date of the team, 
+the time the team was created, every member of each team, 
+the team role of each member, the number of blocks 
+reserved and completed by each user on a team.
+
+### Responses
+
+##### `200 OK`
+
+```text
+STRING,STRING,STRING,...
+STRING,STRING,STRING,...
+...
+```
+
+
 ## `GET /blocks`
 
 Gets blocks done, in progress, todo for all of Boston
