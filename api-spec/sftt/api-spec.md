@@ -451,3 +451,21 @@ Gets all blocks that have a status of `DONE`, in descending order of completion 
     ...
 }
 ```
+
+## `GET /api/v1/protected/blocks/export`
+
+Export Block and User/Team information. This is an admin-only route.
+Returns a `text/cvs` response that includes 
+every block number, the status of the block, 
+the user that is associated with it (first name, last name, email, username), 
+the time it last updated, and the names of the teams the user is currently on.
+
+### Responses
+
+##### `200 OK`
+
+```text
+STRING,STRING,STRING,...
+STRING,STRING,STRING,...
+...
+```
