@@ -135,6 +135,7 @@ Members of a team have roles specified in the following table:
 | NONE           | 0        |
 | MEMBER         | 1        |
 | LEADER         | 2        |
+| PENDING        | 3        |
 
 
 ## `POST /teams`
@@ -171,6 +172,7 @@ Goal is a number of blocks the team would like to complete by the goalCompleteDa
   "goalCompleteDate": DATE,
   "blocksCompleted": INT,
   "blocksReserved": INT,
+  "applicantsToReview": BOOLEAN,
   "members": [
     {
       "id": INT,
@@ -205,13 +207,81 @@ Invite someone to join a team. Will send an email to all specified people that i
 }
 ```
 
-## `POST /teams/:team_id/join`
+## `POST /teams/:team_id/apply`
 
-Join this team. Any member that is not currently a part of a team can join any team.
+Apply to join this team. Any member can apply to join a team that they are not currently on. They will have to be approved by the team leader before becoming an actual member of the team.
 
 ### Request
 
 No request body.
+
+## `GET /teams/:team_id/applicants`
+
+Team Leader only.
+
+Get the info for anyone that has requested to join this team in a list.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+  "applicants": [
+    {
+      "userId": INT,
+      "username": STRING,
+    },
+    ...
+  ]
+}
+```
+
+## `POST /teams/:team_id/applicants/:user_id/approve`
+
+Team Leader only.
+
+Approve this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
+
+### Request
+
+No Request body
+
+### Responses
+
+##### `200 OK`
+
+This member has joined the team.
+
+##### `400 BAD REQUEST`
+
+If the team or request specified in the id is invalid OR the user that had created the request no longer exists.
+
+
+
+## `POST /teams/:team_id/applicants/:user_id/reject`
+
+Team Leader only.
+
+Reject this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
+
+### Request
+
+No Request body
+
+### Responses
+
+##### `200 OK`
+
+This applicant has been removed from the applicant's list.
+
+##### `400 BAD REQUEST`
+
+If the team or request specified in the id is invalid OR the user that had created the request no longer exists.
+
+
+
+
 
 ## `POST /teams/:team_id/leave`
 
@@ -307,6 +377,7 @@ Gets the information for this specific team. Including the members with how many
   "blocksCompleted": INT,
   "blocksReserved": INT,
   "userTeamRole": TEAM_ROLE,
+  "applicantsToReview": BOOLEAN,
   "members": [
     {
       "id": INT,
@@ -323,6 +394,8 @@ Gets the information for this specific team. Including the members with how many
 The `members` list is sorted in descending order of number of blocks completed.
 
 `teamRole` is an indicator of the member's role on the team. Currently there are only two roles: general member and team leader.
+
+`applicantsToReview` is a flag that there are people that have applied to the team that the team leader has to review. This will always be false if a non-leader calls this route.
 
 
 ## `GET /blocks`
