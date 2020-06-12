@@ -172,6 +172,7 @@ Goal is a number of blocks the team would like to complete by the goalCompleteDa
   "goalCompleteDate": DATE,
   "blocksCompleted": INT,
   "blocksReserved": INT,
+  "applicantsToReview": BOOLEAN,
   "members": [
     {
       "id": INT,
@@ -230,8 +231,6 @@ Get the info for anyone that has requested to join this team in a list.
     {
       "userId": INT,
       "username": STRING,
-      "firstName": STRING,
-      "lastName": STRING,
     },
     ...
   ]
@@ -264,7 +263,7 @@ If the team or request specified in the id is invalid OR the user that had creat
 
 Team Leader only.
 
-Approve this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
+Reject this applicant's request to join the team. The user_id will be the same as the id returned in the GET applicants API call.
 
 ### Request
 
@@ -274,7 +273,7 @@ No Request body
 
 ##### `200 OK`
 
-This member has joined the team.
+This applicant has been removed from the applicant's list.
 
 ##### `400 BAD REQUEST`
 
@@ -352,6 +351,7 @@ Gets the information for this specific team. Including the members with how many
   "blocksCompleted": INT,
   "blocksReserved": INT,
   "userTeamRole": TEAM_ROLE,
+  "applicantsToReview": BOOLEAN,
   "members": [
     {
       "id": INT,
@@ -368,6 +368,8 @@ Gets the information for this specific team. Including the members with how many
 The `members` list is sorted in descending order of number of blocks completed.
 
 `teamRole` is an indicator of the member's role on the team. Currently there are only two roles: general member and team leader.
+
+`applicantsToReview` is a flag that there are people that have applied to the team that the team leader has to review. This will always be false if a non-leader calls this route.
 
 
 ## `GET /blocks`
