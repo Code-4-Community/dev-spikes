@@ -359,6 +359,31 @@ Gets a list of teams, names, member count.
 }
 ```
 
+## `GET /teams/admin`
+
+Gets a list of teams with their goal data.
+
+### Responses
+
+##### `200 OK`
+
+```json
+{
+  "teams": [
+    {
+      "id": INT,
+      "name": STRING,
+      "goalCompletionDate": TIMESTAMP,
+      "blocksCompleted": INT,
+      "blocksReserved": INT,
+      "goal": INT
+    },
+    ...
+  ],
+  "rowCount": INT
+}
+```
+
 ## `GET /teams/:team_id`
 
 Gets the information for this specific team. Including the members with how many blocks each one has completed and reserved.
@@ -401,10 +426,10 @@ The `members` list is sorted in descending order of number of blocks completed.
 ## `GET /api/v1/protected/teams/export`
 
 Export Teams and User information. This is an admin-only route.
-Returns a `text/cvs` response that includes 
-every team name, the goal and goal completion date of the team, 
-the time the team was created, every member of each team, 
-the team role of each member, the number of blocks 
+Returns a `text/cvs` response that includes
+every team name, the goal and goal completion date of the team,
+the time the team was created, every member of each team,
+the team role of each member, the number of blocks
 reserved and completed by each user on a team.
 
 ### Responses
@@ -528,9 +553,9 @@ Gets all blocks that have a status of `DONE`, in descending order of completion 
 ## `GET /api/v1/protected/blocks/export`
 
 Export Block and User/Team information. This is an admin-only route.
-Returns a `text/csv` response that includes 
-every block number, the status of the block, 
-the user that is associated with it (first name, last name, email, username), 
+Returns a `text/csv` response that includes
+every block number, the status of the block,
+the user that is associated with it (first name, last name, email, username),
 the time it last updated, and the names of the teams the user is currently on.
 
 ### Responses
