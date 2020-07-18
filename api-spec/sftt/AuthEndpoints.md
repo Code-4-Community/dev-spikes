@@ -318,3 +318,31 @@ passwords should be strings with length >= 8 characters.
 > The currentPassword does not match the calling user's current password.
 
 
+## `POST /user/change_username`
+
+Allows a user to change their username when already authenticated.
+
+### __Request__
+
+```json
+{
+  "newUsername": STRING,
+  "password": STRING
+}
+```
+
+New username must be unique (not already in use by another user).
+
+### __Responses__
+
+##### `200 OK`
+> The username change was successful.
+
+##### `400 BAD REQUEST`
+> If the request was malformed.
+
+##### `401 Unauthorized`
+> The password does not match the calling user's current password.
+
+##### `409 Conflict`
+> The given `newUsername` is already in use.
